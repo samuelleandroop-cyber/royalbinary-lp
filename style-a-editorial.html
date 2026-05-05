@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Royal Binary — Edição especial</title>
+<meta name="description" content="A maioria das plataformas opera no escuro. A Royal Binary não. Modelo 50/50 com transparência radical." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: {
+      fontFamily: {
+        serif: ['Fraunces','Georgia','serif'],
+        sans: ['Inter','system-ui','sans-serif']
+      },
+      colors: {
+        cream: '#F5EFE3',
+        cream2: '#EAE2D0',
+        ink: '#1A1714',
+        muted: '#6B6258',
+        em: '#0F6F4A',
+        em2: '#15805C',
+        ochre: '#A8732C'
+      }
+    }}
+  }
+</script>
+<style>
+  body {
+    background: #F5EFE3;
+    color: #1A1714;
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: Fraunces, Georgia, serif; font-optical-sizing: auto; }
+  .rule { border-color: #1A1714; }
+  .rule-fine { border-color: rgba(26,23,20,0.18); }
+  .dropcap::first-letter {
+    font-family: Fraunces, serif;
+    float: left;
+    font-size: 5.5rem;
+    line-height: 0.85;
+    padding: 0.35rem 0.8rem 0 0;
+    font-weight: 700;
+    color: #0F6F4A;
+  }
+  .smallcaps {
+    font-variant: all-small-caps;
+    letter-spacing: 0.12em;
+  }
+  .pull-quote {
+    font-family: Fraunces, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  ::selection { background: #0F6F4A; color: #F5EFE3; }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD (jornal) -->
+<header class="border-b-2 rule">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="text-xs smallcaps text-muted">Edição n° 001  ·  São Paulo, Brasil</div>
+    <div class="text-xs smallcaps text-muted">2026  ·  Especial Investidores</div>
+  </div>
+  <div class="border-t-2 rule">
+    <div class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+      <a href="#" class="serif text-3xl sm:text-4xl font-black tracking-tight">Royal <span class="italic font-normal">Binary</span></a>
+      <nav class="hidden md:flex gap-8 text-sm">
+        <a href="#planos" class="hover:text-em">Planos</a>
+        <a href="#fundador" class="hover:text-em">Fundador</a>
+        <a href="#bastidores" class="hover:text-em">Bastidores</a>
+        <a href="#video" class="hover:text-em">Vídeo</a>
+        <a href="#faq" class="hover:text-em">FAQ</a>
+      </nav>
+      <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+         class="bg-ink text-cream px-5 py-2.5 text-sm font-medium hover:bg-em transition">Criar conta</a>
+    </div>
+  </div>
+  <div class="border-t rule-fine">
+    <div class="max-w-6xl mx-auto px-6 py-2 text-xs smallcaps text-muted text-center">
+      Operações ao vivo  ·  CNPJ ativo  ·  Saques 1 e 15  ·  Conta gratuita
+    </div>
+  </div>
+</header>
+
+<!-- HERO EDITORIAL -->
+<section class="border-b-2 rule">
+  <div class="max-w-6xl mx-auto px-6 py-16 sm:py-24">
+    <div class="text-xs smallcaps text-em font-semibold">Reportagem especial  ·  Transparência financeira</div>
+    <h1 class="serif text-5xl sm:text-7xl md:text-[88px] leading-[1.02] font-black mt-6 max-w-5xl">
+      A maioria das plataformas opera no escuro.
+      <span class="italic font-normal text-em">A Royal Binary não.</span>
+    </h1>
+    <p class="mt-8 text-xl text-muted max-w-2xl leading-relaxed">
+      Por trás dos retornos publicados em tempo real, um modelo de divisão de lucros que só
+      remunera a plataforma quando o investidor lucra. Esta é a edição definitiva sobre
+      como verificar — antes de investir um centavo.
+    </p>
+
+    <div class="mt-10 flex flex-col sm:flex-row gap-4">
+      <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+         class="bg-ink text-cream px-8 py-4 text-base font-medium hover:bg-em transition">
+        Criar minha conta gratuita
+      </a>
+      <a href="#comunidade" class="px-8 py-4 text-base font-medium border-2 rule hover:bg-cream2 transition">
+        Como acessar o grupo
+      </a>
+    </div>
+
+    <!-- Tabela editorial -->
+    <div class="mt-16 border-t-2 rule pt-6">
+      <div class="grid grid-cols-3 gap-8 sm:gap-16">
+        <div>
+          <div class="text-xs smallcaps text-muted">I. Divisão</div>
+          <div class="serif text-5xl sm:text-6xl font-black mt-2">50<span class="italic font-normal">/</span>50</div>
+        </div>
+        <div>
+          <div class="text-xs smallcaps text-muted">II. Saques</div>
+          <div class="serif text-5xl sm:text-6xl font-black mt-2">1 <span class="italic font-normal">e</span> 15</div>
+        </div>
+        <div>
+          <div class="text-xs smallcaps text-muted">III. Operações</div>
+          <div class="serif text-5xl sm:text-6xl font-black mt-2">100<span class="italic font-normal">%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA — coluna editorial com drop cap -->
+<section class="border-b-2 rule">
+  <div class="max-w-3xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold mb-4">Capítulo 01  ·  O problema do mercado</div>
+    <h2 class="serif text-4xl sm:text-5xl font-bold leading-tight mb-8">
+      Cansado de plataformas que prometem mundos e somem com o seu dinheiro?
+    </h2>
+    <div class="dropcap text-lg leading-relaxed text-ink">
+      Robôs milagrosos, screenshots de WhatsApp como prova, suporte que some quando você pede saque.
+      Quando o assunto é dinheiro, a única coisa que vale é o que pode ser <em>verificado em tempo real</em>.
+      O setor de gestão de investimentos no Brasil ainda convive com esse padrão — e é justamente
+      essa zona cinzenta que separa promessas vazias de operações que existem de fato.
+    </div>
+
+    <blockquote class="mt-10 border-l-4 border-em pl-6 pull-quote text-3xl sm:text-4xl text-ink leading-snug">
+      "Quem entrega resultado de verdade não precisa operar no escuro."
+      <cite class="block not-italic font-sans text-sm smallcaps text-muted mt-3 font-semibold">— Posicionamento Royal Binary</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- OS TRÊS PILARES -->
+<section class="border-b-2 rule">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 02  ·  A solução</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4 max-w-3xl">
+      Três pilares que <em class="text-em">fazem a diferença</em>.
+    </h2>
+
+    <div class="mt-14 grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x-2 divide-ink">
+      <article class="p-8 first:pl-0 last:pr-0 md:px-10">
+        <div class="serif text-5xl font-black text-em">i</div>
+        <h3 class="serif text-2xl font-bold mt-4">Modelo 50 ⁄ 50</h3>
+        <p class="mt-3 text-muted leading-relaxed">
+          A plataforma só fatura quando o investidor lucra. Sem mensalidade, sem taxa escondida.
+          Os incentivos ficam alinhados — nada de comissão por aporte, nada de taxa de manutenção.
+        </p>
+      </article>
+      <article class="p-8 first:pl-0 last:pr-0 md:px-10">
+        <div class="serif text-5xl font-black text-em">ii</div>
+        <h3 class="serif text-2xl font-bold mt-4">Transparência radical</h3>
+        <p class="mt-3 text-muted leading-relaxed">
+          Toda operação é publicada em tempo real no Telegram, WhatsApp e Instagram.
+          Entrada, análise e resultado documentados — todos os dias, ininterruptamente.
+        </p>
+      </article>
+      <article class="p-8 first:pl-0 last:pr-0 md:px-10">
+        <div class="serif text-5xl font-black text-em">iii</div>
+        <h3 class="serif text-2xl font-bold mt-4">Saques previsíveis</h3>
+        <p class="mt-3 text-muted leading-relaxed">
+          Calendário fixo: dias 1 e 15 de cada mês. Não há "análise pontual" para liberar o saque,
+          nem janelas surpresa de bloqueio.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FUNDADOR — perfil editorial -->
+<section id="fundador" class="border-b-2 rule">
+  <div class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-12 gap-12 items-start">
+    <div class="md:col-span-5">
+      <figure class="border-2 rule">
+        <img src="imagens/sidnei.png" alt="Sidnei Oliveira"
+             class="w-full aspect-[4/5] object-cover" loading="lazy" />
+        <figcaption class="border-t-2 rule px-5 py-3 bg-cream2 text-xs smallcaps">
+          <span class="font-semibold">Foto:</span> arquivo Royal Binary  ·  São Paulo, 2026
+        </figcaption>
+      </figure>
+    </div>
+    <div class="md:col-span-7">
+      <div class="text-xs smallcaps text-em font-semibold">Capítulo 03  ·  Perfil</div>
+      <h2 class="serif text-5xl sm:text-6xl font-black leading-[1.05] mt-4">
+        Sidnei Oliveira:<br/>
+        <em class="font-normal">o trader por trás da plataforma</em>.
+      </h2>
+      <div class="mt-8 dropcap text-lg leading-relaxed text-ink">
+        Liderada por um trader de carne e osso — com nome, rosto e CNPJ. Sidnei Oliveira atua
+        há anos nos mercados financeiros brasileiro e internacional. Aparece diariamente no grupo
+        do Telegram, comenta operações ao vivo e responde dúvidas sem se esconder atrás de avatar
+        ou nome fantasia.
+      </div>
+      <ul class="mt-8 space-y-3 border-t-2 rule pt-6">
+        <li class="flex gap-4"><span class="serif text-em font-bold">i.</span><span class="text-muted">Anos de operação documentada em mercados regulados</span></li>
+        <li class="flex gap-4"><span class="serif text-em font-bold">ii.</span><span class="text-muted">Presença diária na comunidade aberta</span></li>
+        <li class="flex gap-4"><span class="serif text-em font-bold">iii.</span><span class="text-muted">Responsável legal pela Royal Binary LTDA</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos" class="border-b-2 rule bg-cream2/40">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 04  ·  Contratos</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4 max-w-3xl">
+      Escolha o plano que <em class="text-em">combina com você</em>.
+    </h2>
+
+    <div class="mt-14 grid md:grid-cols-3 border-2 rule divide-x-0 md:divide-x-2 divide-ink">
+      <article class="p-8 border-b-2 md:border-b-0 rule bg-cream">
+        <div class="text-xs smallcaps text-muted font-semibold">Plano i  ·  Iniciante</div>
+        <div class="serif text-4xl font-black mt-3">Iniciante</div>
+        <ul class="mt-6 space-y-2 text-muted text-sm">
+          <li>— Aporte inicial baixo</li>
+          <li>— Operações automatizadas</li>
+          <li>— Acesso à comunidade</li>
+          <li>— Suporte humano</li>
+        </ul>
+        <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+           class="block mt-8 text-center border-2 rule px-4 py-3 text-sm font-medium hover:bg-ink hover:text-cream transition">Começar →</a>
+      </article>
+      <article class="p-8 border-b-2 md:border-b-0 rule bg-em text-cream">
+        <div class="text-xs smallcaps font-semibold opacity-90">Plano ii  ·  recomendado</div>
+        <div class="serif text-4xl font-black mt-3">Intermediário</div>
+        <ul class="mt-6 space-y-2 text-cream/85 text-sm">
+          <li>— Aportes maiores, gestão profissional</li>
+          <li>— Relatórios semanais</li>
+          <li>— Estratégias diversificadas</li>
+          <li>— Suporte prioritário</li>
+        </ul>
+        <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+           class="block mt-8 text-center bg-cream text-ink px-4 py-3 text-sm font-medium hover:bg-cream2 transition">Começar →</a>
+      </article>
+      <article class="p-8 bg-cream">
+        <div class="text-xs smallcaps text-muted font-semibold">Plano iii  ·  Avançado</div>
+        <div class="serif text-4xl font-black mt-3">Avançado</div>
+        <ul class="mt-6 space-y-2 text-muted text-sm">
+          <li>— Maior potencial de alocação</li>
+          <li>— Relatórios mensais completos</li>
+          <li>— Atendimento dedicado</li>
+          <li>— Estratégias premium</li>
+        </ul>
+        <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+           class="block mt-8 text-center border-2 rule px-4 py-3 text-sm font-medium hover:bg-ink hover:text-cream transition">Começar →</a>
+      </article>
+    </div>
+    <p class="mt-6 text-xs smallcaps text-muted">
+      Detalhes de aporte, taxas e regras de cada contrato disponíveis após cadastro gratuito.
+    </p>
+  </div>
+</section>
+
+<!-- BASTIDORES -->
+<section id="bastidores" class="border-b-2 rule">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 05  ·  Bastidores</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4 max-w-3xl">
+      A Royal Binary não vive <em class="text-em">só atrás de uma tela</em>.
+    </h2>
+    <p class="mt-5 text-lg text-muted max-w-3xl leading-relaxed">
+      Presença em mais de seis países e encontros presenciais com investidores nas principais cidades brasileiras.
+    </p>
+
+    <div class="mt-14 grid grid-cols-3 border-2 rule divide-x-2 divide-ink">
+      <div class="p-8 text-center">
+        <div class="serif text-7xl font-black text-em">+6</div>
+        <div class="mt-3 text-xs smallcaps text-muted">Países</div>
+      </div>
+      <div class="p-8 text-center">
+        <div class="serif text-7xl font-black">+12</div>
+        <div class="mt-3 text-xs smallcaps text-muted">Cidades visitadas</div>
+      </div>
+      <div class="p-8 text-center">
+        <div class="serif text-7xl font-black italic">∞</div>
+        <div class="mt-3 text-xs smallcaps text-muted">Encontros mensais</div>
+      </div>
+    </div>
+
+    <div class="mt-10 grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">BR</div><div class="text-xs smallcaps text-muted mt-1">Brasil</div></div>
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">US</div><div class="text-xs smallcaps text-muted mt-1">EUA</div></div>
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">PT</div><div class="text-xs smallcaps text-muted mt-1">Portugal</div></div>
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">ES</div><div class="text-xs smallcaps text-muted mt-1">Espanha</div></div>
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">AR</div><div class="text-xs smallcaps text-muted mt-1">Argentina</div></div>
+      <div class="border-2 rule p-4 text-center"><div class="serif text-2xl font-bold">MX</div><div class="text-xs smallcaps text-muted mt-1">México</div></div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap gap-2">
+      <span class="border rule-fine px-4 py-2 text-sm">São Paulo</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Rio de Janeiro</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Belo Horizonte</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Brasília</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Curitiba</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Porto Alegre</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Salvador</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Recife</span>
+      <span class="border rule-fine px-4 py-2 text-sm">Fortaleza</span>
+      <span class="border rule-fine px-4 py-2 text-sm italic text-em">+ outras</span>
+    </div>
+  </div>
+</section>
+
+<!-- VÍDEO -->
+<section id="video" class="border-b-2 rule bg-ink text-cream">
+  <div class="max-w-5xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 06  ·  Encontro presencial</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4 max-w-3xl">
+      A reunião do CEO <em class="text-em">com os investidores</em>.
+    </h2>
+    <p class="mt-5 text-lg text-cream/70 max-w-2xl leading-relaxed">
+      Sem ator, sem roteiro, sem edição forçada. Investidores reais em encontro com Sidnei Oliveira.
+    </p>
+
+    <div class="mt-12 relative border-2 border-em group cursor-pointer"
+         id="video-facade-a" data-video-id="fWNSGO4q84E"
+         role="button" tabindex="0">
+      <div class="aspect-video relative overflow-hidden">
+        <img src="imagens/video-thumb.jpg" alt="" class="w-full h-full object-cover" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-24 h-24 rounded-full bg-em flex items-center justify-center group-hover:bg-em2 transition">
+            <span class="block w-0 h-0 ml-1.5"
+                  style="border-top:14px solid transparent;border-bottom:14px solid transparent;border-left:22px solid #F5EFE3;"></span>
+          </div>
+        </div>
+        <div class="absolute top-5 left-5 text-xs smallcaps font-semibold border border-em px-3 py-1 bg-black/60">Assistir reportagem</div>
+      </div>
+    </div>
+    <script>
+      (function(){
+        var f=document.getElementById('video-facade-a');if(!f)return;
+        function play(){var id=f.getAttribute('data-video-id');var i=document.createElement('iframe');
+          i.src='https://www.youtube.com/embed/'+id+'?autoplay=1&rel=0';i.setAttribute('frameborder','0');
+          i.setAttribute('allow','accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share');
+          i.setAttribute('allowfullscreen','');i.className='absolute inset-0 w-full h-full';
+          f.innerHTML='<div class="aspect-video relative"></div>';f.firstElementChild.appendChild(i);
+          f.classList.remove('cursor-pointer','group');}
+        f.addEventListener('click',play);
+        f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();play();}});
+      })();
+    </script>
+
+    <div class="mt-10 grid sm:grid-cols-2 gap-4">
+      <a href="https://www.youtube.com/@royalbinaryoficial" target="_blank" rel="noopener"
+         class="bg-cream text-ink px-6 py-5 flex items-center justify-between hover:bg-cream2 transition">
+        <div>
+          <div class="text-xs smallcaps text-muted">Canal oficial</div>
+          <div class="serif text-xl font-bold mt-1">Inscrever-se no YouTube</div>
+        </div>
+        <span class="text-em serif text-2xl">→</span>
+      </a>
+      <a href="https://wa.me/5521993985720?text=Ol%C3%A1!%20Vi%20a%20landing%20da%20Royal%20Binary%20e%20quero%20saber%20mais." target="_blank" rel="noopener"
+         class="bg-em text-cream px-6 py-5 flex items-center justify-between hover:bg-em2 transition">
+        <div>
+          <div class="text-xs smallcaps opacity-80">Atendimento direto</div>
+          <div class="serif text-xl font-bold mt-1">Falar no WhatsApp</div>
+        </div>
+        <span class="serif text-2xl">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- COMUNIDADE LOCKED -->
+<section id="comunidade" class="border-b-2 rule">
+  <div class="max-w-5xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 07  ·  Acesso restrito</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4 max-w-3xl">
+      A comunidade é <em class="text-em">só para quem tem conta</em>.
+    </h2>
+    <p class="mt-5 text-lg text-muted max-w-3xl leading-relaxed">
+      Para preservar a qualidade do grupo (sem bots, sem curiosos), o acesso aos canais oficiais
+      é liberado apenas após criar sua conta gratuita. O cadastro é grátis, leva menos de dois minutos
+      e não exige depósito.
+    </p>
+
+    <div class="mt-12 border-2 rule">
+      <div class="border-b rule-fine px-6 py-5 flex items-center justify-between hover:bg-cream2/50 transition">
+        <div class="flex items-center gap-4">
+          <div class="serif text-2xl font-bold text-em w-10">tg</div>
+          <div>
+            <div class="serif text-lg font-bold">Grupo no Telegram</div>
+            <div class="text-xs smallcaps text-muted mt-0.5">operações em tempo real</div>
+          </div>
+        </div>
+        <div class="text-xs smallcaps font-semibold text-em">— bloqueado</div>
+      </div>
+      <div class="border-b rule-fine px-6 py-5 flex items-center justify-between hover:bg-cream2/50 transition">
+        <div class="flex items-center gap-4">
+          <div class="serif text-2xl font-bold text-em w-10">wa</div>
+          <div>
+            <div class="serif text-lg font-bold">Grupo no WhatsApp</div>
+            <div class="text-xs smallcaps text-muted mt-0.5">suporte humano 24/7</div>
+          </div>
+        </div>
+        <div class="text-xs smallcaps font-semibold text-em">— bloqueado</div>
+      </div>
+      <div class="px-6 py-5 flex items-center justify-between hover:bg-cream2/50 transition">
+        <div class="flex items-center gap-4">
+          <div class="serif text-2xl font-bold text-em w-10">so</div>
+          <div>
+            <div class="serif text-lg font-bold">Análises diárias do fundador</div>
+            <div class="text-xs smallcaps text-muted mt-0.5">sidnei ao vivo</div>
+          </div>
+        </div>
+        <div class="text-xs smallcaps font-semibold text-em">— bloqueado</div>
+      </div>
+    </div>
+
+    <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+       class="block mt-10 bg-ink text-cream text-center py-5 hover:bg-em transition serif text-xl font-bold">
+      Criar conta grátis e desbloquear o grupo →
+    </a>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="border-b-2 rule bg-cream2/40">
+  <div class="max-w-6xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 08  ·  Verificação</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4">
+      Empresa real, <em class="text-em">com endereço real</em>.
+    </h2>
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 border-2 rule divide-x-0 md:divide-x-2 divide-ink">
+      <div class="p-6 border-b-2 md:border-b-0 rule">
+        <div class="text-xs smallcaps text-muted font-semibold">Razão social</div>
+        <div class="serif text-xl font-bold mt-2">Royal Binary LTDA</div>
+        <div class="text-sm text-muted mt-1">CNPJ 64.020.950/0001-60</div>
+      </div>
+      <div class="p-6 border-b-2 md:border-b-0 rule">
+        <div class="text-xs smallcaps text-muted font-semibold">Sede</div>
+        <div class="serif text-xl font-bold mt-2">Av. Paulista, 807</div>
+        <div class="text-sm text-muted mt-1">São Paulo, SP</div>
+      </div>
+      <div class="p-6 border-b-2 md:border-b-0 rule">
+        <div class="text-xs smallcaps text-muted font-semibold">Execução</div>
+        <div class="serif text-xl font-bold mt-2">Corretoras CVM</div>
+        <div class="text-sm text-muted mt-1">Cadeia regulatória BR</div>
+      </div>
+      <div class="p-6">
+        <div class="text-xs smallcaps text-muted font-semibold">Reputação</div>
+        <div class="serif text-xl font-bold mt-2">Reclame Aqui limpo</div>
+        <div class="text-sm text-muted mt-1">Sem reclamações</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="border-b-2 rule">
+  <div class="max-w-3xl mx-auto px-6 py-20">
+    <div class="text-xs smallcaps text-em font-semibold">Capítulo 09  ·  FAQ</div>
+    <h2 class="serif text-5xl sm:text-6xl font-bold leading-tight mt-4">Perguntas frequentes.</h2>
+
+    <div class="mt-12 border-t-2 rule">
+      <details class="border-b-2 rule-fine py-6">
+        <summary class="serif text-xl font-bold flex justify-between items-center">A Royal Binary é uma empresa registrada?<span class="text-em">+</span></summary>
+        <p class="mt-4 text-muted leading-relaxed">Sim. Royal Binary LTDA, CNPJ 64.020.950/0001-60, com sede na Avenida Paulista, 807, São Paulo. Você pode consultar o CNPJ na Receita Federal.</p>
+      </details>
+      <details class="border-b-2 rule-fine py-6">
+        <summary class="serif text-xl font-bold flex justify-between items-center">Como funciona o modelo 50/50?<span class="text-em">+</span></summary>
+        <p class="mt-4 text-muted leading-relaxed">Os investidores ficam com metade dos lucros gerados; a Royal Binary retém a outra metade como tarifa de serviço. Se não houver lucro, a plataforma também não fatura.</p>
+      </details>
+      <details class="border-b-2 rule-fine py-6">
+        <summary class="serif text-xl font-bold flex justify-between items-center">Como sei que as operações são reais?<span class="text-em">+</span></summary>
+        <p class="mt-4 text-muted leading-relaxed">Após criar sua conta gratuita, você recebe acesso aos canais oficiais (Telegram e WhatsApp) onde toda operação é publicada em tempo real.</p>
+      </details>
+      <details class="border-b-2 rule-fine py-6">
+        <summary class="serif text-xl font-bold flex justify-between items-center">Quando posso sacar?<span class="text-em">+</span></summary>
+        <p class="mt-4 text-muted leading-relaxed">Calendário fixo: dias 1 e 15 de cada mês.</p>
+      </details>
+      <details class="border-b-2 rule-fine py-6">
+        <summary class="serif text-xl font-bold flex justify-between items-center">Existe risco?<span class="text-em">+</span></summary>
+        <p class="mt-4 text-muted leading-relaxed">Sim. Toda operação financeira envolve risco de perda. Rentabilidade passada não garante resultados futuros.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="border-b-2 rule bg-em text-cream">
+  <div class="max-w-3xl mx-auto px-6 py-24 text-center">
+    <div class="text-xs smallcaps font-semibold opacity-90">Capítulo 10  ·  Começar</div>
+    <h2 class="serif text-5xl sm:text-7xl font-black leading-[1.05] mt-5">
+      Comece com uma conta <em class="font-normal">gratuita</em> hoje.
+    </h2>
+    <p class="mt-6 text-lg opacity-85 max-w-xl mx-auto">
+      Cadastre-se, acompanhe as operações em tempo real e decida com calma. Sem mensalidade, sem compromisso.
+    </p>
+    <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+       class="inline-block mt-10 bg-cream text-ink px-10 py-5 serif text-lg font-bold hover:bg-cream2 transition">
+      Criar minha conta agora →
+    </a>
+    <p class="mt-6 text-xs smallcaps opacity-70">[ aviso de risco ] investimentos envolvem risco de perda</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-10 px-6 max-w-6xl mx-auto">
+  <div class="flex flex-col sm:flex-row justify-between gap-6 items-start">
+    <div>
+      <div class="serif text-2xl font-black">Royal <span class="italic font-normal">Binary</span></div>
+      <div class="text-xs text-muted mt-2 leading-relaxed">
+        Royal Binary LTDA · CNPJ 64.020.950/0001-60<br/>
+        Av. Paulista, 807 · São Paulo · SP · Brasil
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-4 text-xs smallcaps">
+      <a href="https://royalbinary.io/pt-BR/about" target="_blank" rel="noopener" class="hover:text-em">Sobre</a>
+      <a href="https://www.instagram.com/royalbinary.io/" target="_blank" rel="noopener" class="hover:text-em">Instagram</a>
+      <a href="https://www.youtube.com/@royalbinaryoficial" target="_blank" rel="noopener" class="hover:text-em">YouTube</a>
+      <a href="https://wa.me/5521993985720" target="_blank" rel="noopener" class="hover:text-em">WhatsApp</a>
+      <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener" class="hover:text-em">Cadastro</a>
+    </div>
+  </div>
+  <div class="mt-8 pt-6 border-t rule-fine text-xs text-muted leading-relaxed">
+    Esta página é uma divulgação independente e contém link de indicação. Toda operação financeira envolve risco de perda. Rentabilidade passada não garante resultados futuros.
+  </div>
+</footer>
+
+<!-- FLOATS -->
+<div class="fixed right-4 sm:right-6 z-[60] flex flex-col gap-3 bottom-24 sm:bottom-6">
+  <a href="https://www.youtube.com/@royalbinaryoficial" target="_blank" rel="noopener" aria-label="YouTube"
+     class="w-12 h-12 sm:w-14 sm:h-14 bg-red-700 hover:bg-red-600 flex items-center justify-center font-bold text-cream text-xs serif border-2 border-ink">YT</a>
+  <a href="https://wa.me/5521993985720?text=Ol%C3%A1!%20Vi%20a%20landing%20da%20Royal%20Binary%20e%20quero%20saber%20mais." target="_blank" rel="noopener" aria-label="WhatsApp"
+     class="w-12 h-12 sm:w-14 sm:h-14 bg-em hover:bg-em2 flex items-center justify-center font-bold text-cream text-xs serif border-2 border-ink">WA</a>
+</div>
+
+<div class="fixed bottom-0 inset-x-0 z-50 sm:hidden bg-cream border-t-2 rule p-3">
+  <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+     class="block w-full text-center bg-ink text-cream py-3 serif font-bold">Criar conta grátis →</a>
+</div>
+<div class="sm:hidden h-20"></div>
+
+</body>
+</html>

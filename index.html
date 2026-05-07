@@ -264,10 +264,30 @@
   .aff-bar input {
     background: #171B19; border: 1px solid #2A2E2C; color: #F8FAFC;
     border-radius: 6px; padding: 8px 12px; font-size: 13px; outline: none;
-    transition: border-color .2s;
+    transition: border-color .3s, opacity .3s;
   }
   .aff-bar input:focus { border-color: #22E083; }
   .aff-bar input::placeholder { color: #64748B; }
+  .aff-bar input:disabled { opacity: 0.4; cursor: not-allowed; }
+  .aff-lock-icon {
+    transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .aff-lock-icon.unlocked {
+    transform: scale(1.3);
+  }
+  .aff-fade-out {
+    animation: affFadeOut .3s ease forwards;
+  }
+  .aff-fade-in {
+    animation: affFadeIn .3s ease forwards;
+  }
+  @keyframes affFadeOut {
+    to { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+  }
+  @keyframes affFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .aff-badge {
     background: rgba(34,224,131,0.08); border: 1px solid rgba(34,224,131,0.25);
     color: #22E083; border-radius: 6px; padding: 6px 14px; font-size: 12px;
@@ -285,14 +305,34 @@
 
 <!-- AFFILIATE BAR -->
 <div id="aff-bar" class="aff-bar sticky top-0 z-[70] hidden">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-3 flex-wrap sm:flex-nowrap">
-    <!-- Input state -->
-    <div id="aff-input" class="flex items-center gap-2 w-full sm:w-auto flex-1">
-      <input id="aff-link" type="url" placeholder="Cole seu link de indicação aqui" class="flex-1 min-w-0">
-      <button id="aff-save" class="btn-em px-4 py-2 rounded-md text-[13px] shrink-0">Salvar</button>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+    <!-- Locked state -->
+    <div id="aff-locked">
+      <div class="flex items-center gap-2 mb-2.5">
+        <span id="aff-lock-icon" class="aff-lock-icon text-base leading-none">&#x1F512;</span>
+        <span class="text-[12px] text-mute2 mono uppercase tracking-wider">Desbloqueie para inserir seu link de indicação</span>
+      </div>
+      <div class="flex items-center gap-2 mb-2.5">
+        <input type="url" disabled placeholder="Cole seu link de indicação aqui" class="flex-1 min-w-0">
+      </div>
+      <div class="flex items-center gap-3">
+        <a id="aff-create" href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener" class="btn-em px-4 py-2 rounded-md text-[13px] inline-flex items-center gap-1.5">Criar minha conta <span aria-hidden="true">→</span></a>
+        <button id="aff-have" type="button" class="text-[12px] text-mute hover:text-ink transition cursor-pointer">Já tenho conta</button>
+      </div>
+    </div>
+    <!-- Input state (unlocked) -->
+    <div id="aff-input" class="hidden">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-base leading-none">&#x1F513;</span>
+        <span class="text-[12px] text-em mono uppercase tracking-wider">Desbloqueado</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <input id="aff-link" type="url" placeholder="Cole seu link de indicação aqui" class="flex-1 min-w-0">
+        <button id="aff-save" class="btn-em px-4 py-2 rounded-md text-[13px] shrink-0">Salvar</button>
+      </div>
     </div>
     <!-- Active state -->
-    <div id="aff-active" class="hidden items-center gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+    <div id="aff-active" class="hidden items-center gap-3 flex-wrap sm:flex-nowrap">
       <span class="aff-badge mono">&#x2705; Seu link de indicação está ativo</span>
       <button id="aff-copy" class="btn-ghost px-3 py-1.5 rounded-md text-[11px] mono">Copiar link</button>
       <button id="aff-change" class="text-[11px] text-mute2 hover:text-ink transition cursor-pointer">Trocar link</button>
@@ -1617,21 +1657,25 @@ document.addEventListener('DOMContentLoaded', function(){
 <script>
 // ========== AFFILIATE REFERRAL LINK ==========
 (function(){
-  var KEY = 'rb_affiliate_link';
+  var KEY_MANUAL = 'rb_affiliate_manual';
+  var KEY_UNLOCKED = 'rb_affiliate_unlocked';
   var bar = document.getElementById('aff-bar');
+  var lockedWrap = document.getElementById('aff-locked');
   var inputWrap = document.getElementById('aff-input');
   var activeWrap = document.getElementById('aff-active');
   var input = document.getElementById('aff-link');
   var saveBtn = document.getElementById('aff-save');
   var copyBtn = document.getElementById('aff-copy');
   var changeBtn = document.getElementById('aff-change');
+  var createBtn = document.getElementById('aff-create');
+  var haveBtn = document.getElementById('aff-have');
+  var lockIcon = document.getElementById('aff-lock-icon');
 
   if (!bar) return;
 
-  var KEY_MANUAL = 'rb_affiliate_manual';
-
   function replaceAllCTAs(url) {
     document.querySelectorAll('a[href*="royalbinary.io"]').forEach(function(a) {
+      if (a.id === 'aff-create') return;
       a.href = url;
     });
   }
@@ -1640,22 +1684,47 @@ document.addEventListener('DOMContentLoaded', function(){
     return location.origin + location.pathname + '?ref=' + encodeURIComponent(url);
   }
 
-  function showActive(url) {
+  function hideAll() {
+    lockedWrap.classList.add('hidden');
     inputWrap.classList.add('hidden');
+    activeWrap.classList.add('hidden');
+    activeWrap.classList.remove('flex');
+  }
+
+  function showLocked() {
+    hideAll();
+    lockedWrap.classList.remove('hidden');
+    bar.classList.remove('hidden');
+  }
+
+  function showInput(animate) {
+    hideAll();
+    inputWrap.classList.remove('hidden');
+    bar.classList.remove('hidden');
+    if (animate) {
+      inputWrap.classList.add('aff-fade-in');
+      setTimeout(function(){ inputWrap.classList.remove('aff-fade-in'); }, 300);
+    }
+    input.value = '';
+    setTimeout(function(){ input.focus(); }, 50);
+  }
+
+  function showActive(url) {
+    hideAll();
     activeWrap.classList.remove('hidden');
     activeWrap.classList.add('flex');
     bar.classList.remove('hidden');
     replaceAllCTAs(url);
   }
 
-  function showInput() {
-    activeWrap.classList.add('hidden');
-    activeWrap.classList.remove('flex');
-    inputWrap.classList.remove('hidden');
-    inputWrap.classList.add('flex');
-    bar.classList.remove('hidden');
-    input.value = '';
-    input.focus();
+  function animateUnlock() {
+    lockIcon.textContent = '🔓';
+    lockIcon.classList.add('unlocked');
+    lockedWrap.classList.add('aff-fade-out');
+    localStorage.setItem(KEY_UNLOCKED, '1');
+    setTimeout(function(){
+      showInput(true);
+    }, 300);
   }
 
   // Check URL param first
@@ -1663,16 +1732,25 @@ document.addEventListener('DOMContentLoaded', function(){
   var refParam = params.get('ref');
 
   if (refParam) {
-    // Visitor via shared link: apply silently, no UI
     replaceAllCTAs(refParam);
   } else {
     var storedManual = localStorage.getItem(KEY_MANUAL);
     if (storedManual) {
       showActive(storedManual);
+    } else if (localStorage.getItem(KEY_UNLOCKED)) {
+      showInput(false);
     } else {
-      showInput();
+      showLocked();
     }
   }
+
+  createBtn.addEventListener('click', function() {
+    animateUnlock();
+  });
+
+  haveBtn.addEventListener('click', function() {
+    animateUnlock();
+  });
 
   saveBtn.addEventListener('click', function() {
     var val = input.value.trim();
@@ -1697,7 +1775,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
   changeBtn.addEventListener('click', function() {
     localStorage.removeItem(KEY_MANUAL);
-    showInput();
+    showInput(false);
     replaceAllCTAs('https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user');
   });
 })();

@@ -1231,15 +1231,19 @@
 </div>
 
 <!-- LIGHTBOX MODAL DEPOIMENTOS -->
-<div id="story-modal" class="fixed inset-0 bg-black/95 z-[80] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="story-modal-label">
+<div id="story-modal" class="fixed inset-0 bg-black/95 z-[80] hidden items-center justify-center p-4 pt-16" role="dialog" aria-modal="true" aria-labelledby="story-modal-label">
   <span id="story-modal-label" class="sr-only">Depoimento de cliente</span>
-  <button id="story-close" type="button" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition" aria-label="Fechar depoimento">×</button>
+  <button id="story-close" type="button" class="absolute top-3 right-4 z-[90] w-11 h-11 rounded-full bg-white/20 hover:bg-white/30 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition" aria-label="Fechar depoimento">×</button>
   <button id="story-prev" type="button" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition" aria-label="Depoimento anterior">‹</button>
   <button id="story-next" type="button" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition" aria-label="Próximo depoimento">›</button>
   <div class="absolute bottom-6 left-1/2 -translate-x-1/2 mono text-[10px] uppercase tracking-widest text-white/60">
     <span id="story-counter">1</span> / 50
   </div>
-  <video id="story-video" controls playsinline class="max-w-full max-h-[88vh] rounded-md shadow-2xl" preload="metadata"></video>
+  <video id="story-video" controls playsinline class="max-w-full max-h-[80vh] rounded-md shadow-2xl" preload="metadata"></video>
+  <button id="story-unmute" type="button" class="absolute top-3 left-4 z-[90] hidden items-center gap-2 px-3 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-medium transition" aria-label="Ativar som">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    Ativar som
+  </button>
 </div>
 
 <script>
@@ -1249,14 +1253,19 @@
   var modal = document.getElementById('story-modal');
   var video = document.getElementById('story-video');
   var counter = document.getElementById('story-counter');
+  var unmuteBtn = document.getElementById('story-unmute');
   var current = 1;
   var prevFocus = null;
 
   function pad(n){ return String(n).padStart(2, '0'); }
 
+  function hideUnmute(){ unmuteBtn.classList.add('hidden'); unmuteBtn.classList.remove('flex'); }
+  function showUnmute(){ unmuteBtn.classList.remove('hidden'); unmuteBtn.classList.add('flex'); }
+
   function openStory(n){
     current = Math.max(1, Math.min(TOTAL, n));
     if (counter) counter.textContent = current;
+    hideUnmute();
     video.muted = false;
     video.volume = 1;
     video.src = 'videos/' + pad(current) + '_processed.mp4';
@@ -1265,6 +1274,7 @@
     modal.classList.add('flex');
     video.play().catch(function(){
       video.muted = true;
+      showUnmute();
       video.play().catch(function(){});
     });
     document.body.style.overflow = 'hidden';
@@ -1273,6 +1283,7 @@
   function closeStory(){
     modal.classList.add('hidden');
     modal.classList.remove('flex');
+    hideUnmute();
     video.pause();
     video.src = '';
     document.body.style.overflow = '';
@@ -1288,6 +1299,11 @@
   document.getElementById('story-close').addEventListener('click', closeStory);
   document.getElementById('story-next').addEventListener('click', nextStory);
   document.getElementById('story-prev').addEventListener('click', prevStory);
+  unmuteBtn.addEventListener('click', function(){
+    video.muted = false;
+    video.volume = 1;
+    hideUnmute();
+  });
   modal.addEventListener('click', function(e){ if (e.target === modal) closeStory(); });
   document.addEventListener('keydown', function(e){
     if (modal.classList.contains('hidden')) return;

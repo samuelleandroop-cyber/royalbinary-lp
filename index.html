@@ -520,8 +520,8 @@
 <section id="analise" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-3xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy">
-        <span class="text-mute2">[01]</span> Como funciona
+      <div class="mono text-[13px] uppercase tracking-widest text-cy">
+        Como funciona
       </div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Seu rendimento vem através do <span class="text-em">mercado financeiro</span> e não de novos membros.
@@ -1257,11 +1257,16 @@
   function openStory(n){
     current = Math.max(1, Math.min(TOTAL, n));
     if (counter) counter.textContent = current;
+    video.muted = false;
+    video.volume = 1;
     video.src = 'videos/' + pad(current) + '_processed.mp4';
     prevFocus = document.activeElement;
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    video.play().catch(function(){});
+    video.play().catch(function(){
+      video.muted = true;
+      video.play().catch(function(){});
+    });
     document.body.style.overflow = 'hidden';
     setTimeout(function(){ document.getElementById('story-close').focus(); }, 50);
   }

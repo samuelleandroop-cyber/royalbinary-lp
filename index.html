@@ -1240,10 +1240,6 @@
     <span id="story-counter">1</span> / 50
   </div>
   <video id="story-video" controls playsinline class="max-w-full max-h-[80vh] rounded-md shadow-2xl" preload="metadata"></video>
-  <button id="story-unmute" type="button" class="absolute top-3 left-4 z-[90] hidden items-center gap-2 px-3 py-2 rounded-full bg-white/20 hover:bg-white/30 text-white text-xs font-medium transition" aria-label="Ativar som">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-4 h-4"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
-    Ativar som
-  </button>
 </div>
 
 <script>
@@ -1253,37 +1249,28 @@
   var modal = document.getElementById('story-modal');
   var video = document.getElementById('story-video');
   var counter = document.getElementById('story-counter');
-  var unmuteBtn = document.getElementById('story-unmute');
   var current = 1;
   var prevFocus = null;
 
   function pad(n){ return String(n).padStart(2, '0'); }
 
-  function hideUnmute(){ unmuteBtn.classList.add('hidden'); unmuteBtn.classList.remove('flex'); }
-  function showUnmute(){ unmuteBtn.classList.remove('hidden'); unmuteBtn.classList.add('flex'); }
-
   function openStory(n){
     current = Math.max(1, Math.min(TOTAL, n));
     if (counter) counter.textContent = current;
-    hideUnmute();
+
     video.muted = false;
     video.volume = 1;
     video.src = 'videos/' + pad(current) + '_processed.mp4';
     prevFocus = document.activeElement;
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    video.play().catch(function(){
-      video.muted = true;
-      showUnmute();
-      video.play().catch(function(){});
-    });
+    video.play().catch(function(){});
     document.body.style.overflow = 'hidden';
-    setTimeout(function(){ document.getElementById('story-close').focus(); }, 50);
   }
   function closeStory(){
     modal.classList.add('hidden');
     modal.classList.remove('flex');
-    hideUnmute();
+
     video.pause();
     video.src = '';
     document.body.style.overflow = '';
@@ -1299,11 +1286,6 @@
   document.getElementById('story-close').addEventListener('click', closeStory);
   document.getElementById('story-next').addEventListener('click', nextStory);
   document.getElementById('story-prev').addEventListener('click', prevStory);
-  unmuteBtn.addEventListener('click', function(){
-    video.muted = false;
-    video.volume = 1;
-    hideUnmute();
-  });
   modal.addEventListener('click', function(e){ if (e.target === modal) closeStory(); });
   document.addEventListener('keydown', function(e){
     if (modal.classList.contains('hidden')) return;
@@ -1646,6 +1628,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   if (!bar) return;
 
+  var KEY_MANUAL = 'rb_affiliate_manual';
+
   function replaceAllCTAs(url) {
     document.querySelectorAll('a[href*="royalbinary.io"]').forEach(function(a) {
       a.href = url;
@@ -1674,21 +1658,17 @@ document.addEventListener('DOMContentLoaded', function(){
     input.focus();
   }
 
-  function setLink(url) {
-    localStorage.setItem(KEY, url);
-    showActive(url);
-  }
-
   // Check URL param first
   var params = new URLSearchParams(location.search);
   var refParam = params.get('ref');
 
   if (refParam) {
-    setLink(refParam);
+    // Visitor via shared link: apply silently, no UI
+    replaceAllCTAs(refParam);
   } else {
-    var stored = localStorage.getItem(KEY);
-    if (stored) {
-      showActive(stored);
+    var storedManual = localStorage.getItem(KEY_MANUAL);
+    if (storedManual) {
+      showActive(storedManual);
     } else {
       showInput();
     }
@@ -1697,7 +1677,8 @@ document.addEventListener('DOMContentLoaded', function(){
   saveBtn.addEventListener('click', function() {
     var val = input.value.trim();
     if (!val) { input.focus(); return; }
-    setLink(val);
+    localStorage.setItem(KEY_MANUAL, val);
+    showActive(val);
   });
 
   input.addEventListener('keydown', function(e) {
@@ -1705,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   copyBtn.addEventListener('click', function() {
-    var stored = localStorage.getItem(KEY);
+    var stored = localStorage.getItem(KEY_MANUAL);
     if (!stored) return;
     var shareUrl = getShareUrl(stored);
     navigator.clipboard.writeText(shareUrl).then(function() {
@@ -1715,7 +1696,7 @@ document.addEventListener('DOMContentLoaded', function(){
   });
 
   changeBtn.addEventListener('click', function() {
-    localStorage.removeItem(KEY);
+    localStorage.removeItem(KEY_MANUAL);
     showInput();
     replaceAllCTAs('https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user');
   });

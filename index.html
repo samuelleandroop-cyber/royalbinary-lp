@@ -1506,6 +1506,24 @@ document.addEventListener('DOMContentLoaded', function(){
       delay: isMobile ? 0.5 : 0.8
     });
 
+    // Background tab failsafe: Chrome throttles rAF in background tabs,
+    // leaving hero at opacity 0. Kill stuck tweens and force final state.
+    function forceHeroVisible() {
+      var sel = '.gsap-hero-title, .gsap-hero-fade';
+      document.querySelectorAll(sel).forEach(function(el) {
+        gsap.killTweensOf(el);
+        gsap.set(el, { opacity: 1, y: 0, visibility: 'visible' });
+        el.querySelectorAll('div, span').forEach(function(child) {
+          gsap.killTweensOf(child);
+          gsap.set(child, { opacity: 1, y: 0, rotateX: 0, clearProps: 'transform' });
+        });
+      });
+    }
+    setTimeout(forceHeroVisible, 3000);
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') setTimeout(forceHeroVisible, 300);
+    });
+
     // ========== SEÇÕES — reveal de títulos ==========
     document.querySelectorAll('section h2').forEach(function(h2){
       if (h2.closest('.gsap-hero-fade') || h2.querySelector('.gradient-text-em')) {

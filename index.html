@@ -1712,7 +1712,7 @@ document.addEventListener('DOMContentLoaded', function(){
   if (!bar) return;
 
   function replaceAllCTAs(url) {
-    document.querySelectorAll('a[href*="royalbinary.io"]').forEach(function(a) {
+    document.querySelectorAll('a[href*="app.royalbinary.io"]').forEach(function(a) {
       if (a.id === 'aff-create') return;
       a.href = url;
     });
@@ -1789,7 +1789,7 @@ document.addEventListener('DOMContentLoaded', function(){
     animateUnlock();
   });
 
-  document.querySelectorAll('a[href*="royalbinary.io"]').forEach(function(a) {
+  document.querySelectorAll('a[href*="app.royalbinary.io"]').forEach(function(a) {
     if (a.id === 'aff-create') return;
     a.addEventListener('click', function() {
       if (!lockedWrap.classList.contains('hidden')) animateUnlock();

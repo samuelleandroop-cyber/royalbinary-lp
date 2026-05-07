@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
@@ -10,6 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" defer></script>
 <script>
   tailwind.config = {
     theme: { extend: {
@@ -18,7 +22,7 @@
         mono: ['"Geist Mono"','"JetBrains Mono"','monospace']
       },
       colors: {
-        bg: '#0F1311',
+        bg: '#080c0a',
         bg2: '#171B19',
         panel: '#1B1F1D',
         panel2: '#222624',
@@ -28,6 +32,7 @@
         mute: '#94A3B8',
         mute2: '#64748B',
         em: '#22E083',
+        'em-light': '#52E89B',
         em2: '#16A968',
         emTint: '#0A2E1A',
         cy: '#7DBF96',
@@ -39,21 +44,29 @@
   }
 </script>
 <style>
+  /* ── Base ── */
   body {
-    background:#0F1311; color:#F8FAFC;
+    background:#080c0a; color:#F8FAFC;
     font-family: "Geist", "Inter", system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   .mono { font-family: "Geist Mono", "JetBrains Mono", ui-monospace, monospace; }
   .num-tabular { font-variant-numeric: tabular-nums; }
-  .grid-bg-d {
-    background-image:
-      linear-gradient(rgba(125,191,150,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(125,191,150,0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 80%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 40%, transparent 80%);
+  /* ── Hero ── */
+  .hero-bg {
+    background: radial-gradient(ellipse 60% 50% at 30% 40%, rgba(34,224,131,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 60% at 75% 20%, rgba(22,169,104,0.06) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 40% at 50% 80%, rgba(34,224,131,0.04) 0%, transparent 60%);
   }
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+  /* ── Panels & Buttons ── */
   .panel-glow {
     box-shadow:
       inset 0 1px 0 rgba(255,255,255,0.04),
@@ -68,14 +81,16 @@
   }
   .btn-em {
     background:#22E083; color:#0A2E1A; font-weight:600;
-    transition: background .18s, transform .18s;
+    transition: background .18s, transform .18s, box-shadow .3s;
   }
-  .btn-em:hover { background:#52E89B; }
+  .btn-em:hover { background:#52E89B; transform: translateY(-2px); box-shadow: 0 0 25px rgba(34,224,131,0.4), 0 8px 20px rgba(34,224,131,0.2); }
+  .btn-em:active { transform: translateY(0); box-shadow: 0 0 10px rgba(34,224,131,0.3); }
   .btn-ghost {
     border:1px solid #363A38; color:#F8FAFC; background:transparent;
-    transition: border-color .18s, background .18s;
+    transition: border-color .18s, background .18s, box-shadow .3s, transform .18s;
   }
-  .btn-ghost:hover { border-color:#7DBF96; background: rgba(125,191,150,0.05); }
+  .btn-ghost:hover { border-color:#7DBF96; background: rgba(125,191,150,0.05); transform: translateY(-1px); box-shadow: 0 0 15px rgba(125,191,150,0.15); }
+  .btn-ghost:active { transform: translateY(0); }
   .live::before {
     content:''; display:inline-block; width:6px; height:6px; border-radius:9999px;
     background:#22E083; margin-right:6px;
@@ -83,8 +98,11 @@
     animation: lp 1.6s infinite;
   }
   @keyframes lp { 70% { box-shadow:0 0 0 8px rgba(34,224,131,0); } 100% { box-shadow:0 0 0 0 rgba(34,224,131,0); } }
-  .ticker { animation: tk 50s linear infinite; }
+  /* ── Ticker ── */
+  .ticker { animation: tk 12s linear infinite; }
+  .ticker-top { animation: tk 18s linear infinite; }
   @keyframes tk { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  /* ── FAQ Accordion ── */
   details > summary { list-style: none; cursor: pointer; }
   details > summary::-webkit-details-marker { display: none; }
   details[open] .chev { transform: rotate(180deg); }
@@ -177,13 +195,8 @@
   .hairline { border-color:#2A2E2C; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
   .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .pill {
-    background: rgba(125,191,150,0.08); color:#7DBF96;
-    border:1px solid rgba(125,191,150,0.25);
-  }
 
-
-  /* Stories wall — animacoes suaves, pausam no hover, respeitam reduced-motion */
+  /* ── Stories Wall ── */
   @keyframes scrollUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
   @keyframes scrollDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
   .anim-up { animation: scrollUp 80s linear infinite; will-change: transform; }
@@ -199,19 +212,118 @@
   @media (prefers-reduced-motion: reduce) {
     .anim-up, .anim-down, .anim-up-slow { animation: none; }
   }
+  .gsap-hero-title, .gsap-hero-fade { visibility: hidden; }
+  .gsap-ready .gsap-hero-title, .gsap-ready .gsap-hero-fade { visibility: visible; }
+
+  /* ── Countdown Timer ── */
+  .countdown-unit {
+    background: rgba(34,224,131,0.08);
+    border: 1px solid rgba(34,224,131,0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 60px;
+    text-align: center;
+  }
+  .countdown-unit .num { font-size: 24px; font-weight: 700; color: #22E083; }
+  .countdown-unit .label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: #64748B; }
+
+  /* ── Card Hover Effects ── */
+  #planos article {
+    transition: transform .25s, box-shadow .3s, border-color .3s;
+  }
+  #planos article:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(34,224,131,0.12), 0 12px 24px rgba(0,0,0,0.3);
+  }
+  /* Glow nos stats ao hover */
+  .gsap-stats-grid > div {
+    transition: background .25s, box-shadow .3s;
+  }
+  .gsap-stats-grid > div:hover {
+    background: #171B19;
+    box-shadow: inset 0 0 30px rgba(34,224,131,0.06);
+  }
+
+  /* ── Sticky CTA Mobile ── */
+  .sticky-cta-mobile {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 55;
+    padding: 10px 16px; padding-bottom: max(10px, env(safe-area-inset-bottom));
+    background: rgba(15,19,17,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid #2A2E2C;
+    transform: translateY(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+  }
+  .sticky-cta-mobile.visible { transform: translateY(0); }
+  @media (min-width: 768px) { .sticky-cta-mobile { display: none; } }
+
+  /* ── Affiliate Bar ── */
+  .aff-bar {
+    background: rgba(15,19,17,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #2A2E2C;
+  }
+  .aff-bar input {
+    background: #171B19; border: 1px solid #2A2E2C; color: #F8FAFC;
+    border-radius: 6px; padding: 8px 12px; font-size: 13px; outline: none;
+    transition: border-color .2s;
+  }
+  .aff-bar input:focus { border-color: #22E083; }
+  .aff-bar input::placeholder { color: #64748B; }
+  .aff-badge {
+    background: rgba(34,224,131,0.08); border: 1px solid rgba(34,224,131,0.25);
+    color: #22E083; border-radius: 6px; padding: 6px 14px; font-size: 12px;
+  }
+
+  /* ── Proofs Scroll ── */
+  .proofs-scroll { scrollbar-width: thin; scrollbar-color: #2A2E2C transparent; -webkit-overflow-scrolling: touch; }
+  .proofs-scroll::-webkit-scrollbar { height: 4px; }
+  .proofs-scroll::-webkit-scrollbar-track { background: transparent; }
+  .proofs-scroll::-webkit-scrollbar-thumb { background: #2A2E2C; border-radius: 4px; }
+  .proofs-scroll::-webkit-scrollbar-thumb:hover { background: #363A38; }
 </style>
 </head>
 <body>
 
-<!-- TOP STATUS BAR -->
-<div class="bg-bg2 border-b hairline">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-9 flex items-center justify-between text-[11px] mono text-mute">
-    <div class="flex items-center gap-4">
-      <span class="live text-em">MARKET LIVE</span>
-      <span class="hidden sm:inline">UTC-3 BR</span>
+<!-- AFFILIATE BAR -->
+<div id="aff-bar" class="aff-bar sticky top-0 z-[70] hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center gap-3 flex-wrap sm:flex-nowrap">
+    <!-- Input state -->
+    <div id="aff-input" class="flex items-center gap-2 w-full sm:w-auto flex-1">
+      <input id="aff-link" type="url" placeholder="Cole seu link de indicação aqui" class="flex-1 min-w-0">
+      <button id="aff-save" class="btn-em px-4 py-2 rounded-md text-[13px] shrink-0">Salvar</button>
     </div>
-    <div class="flex items-center gap-4">
-      <span>v2.6</span>
+    <!-- Active state -->
+    <div id="aff-active" class="hidden items-center gap-3 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+      <span class="aff-badge mono">&#x2705; Seu link de indicação está ativo</span>
+      <button id="aff-copy" class="btn-ghost px-3 py-1.5 rounded-md text-[11px] mono">Copiar link</button>
+      <button id="aff-change" class="text-[11px] text-mute2 hover:text-ink transition cursor-pointer">Trocar link</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOP STATUS BAR -->
+<div class="bg-bg2 border-b hairline overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-9 flex items-center justify-between text-[10px] mono text-mute">
+    <div class="flex-1 overflow-hidden mr-4">
+      <div class="ticker-top whitespace-nowrap flex gap-5 items-center">
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" class="w-3 h-3 rounded-full"/> BTC <span class="text-em">+2.40%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" class="w-3 h-3 rounded-full"/> ETH <span class="text-em">+3.10%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/eu.png" alt="EU" class="w-3 h-3 object-cover rounded-full"/> EUR <span class="text-em">+0.80%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/gb.png" alt="GB" class="w-3 h-3 object-cover rounded-full"/> GBP <span class="text-em">+0.45%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/jp.png" alt="JP" class="w-3 h-3 object-cover rounded-full"/> JPY <span class="text-red">-0.32%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-3 h-3 object-cover rounded-full"/> NASDAQ <span class="text-em">+1.20%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL" class="w-3 h-3 rounded-full"/> SOL <span class="text-em">+4.70%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/br.png" alt="BR" class="w-3 h-3 object-cover rounded-full"/> IBOV <span class="text-em">+0.90%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" class="w-3 h-3 rounded-full"/> BTC <span class="text-em">+2.40%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" class="w-3 h-3 rounded-full"/> ETH <span class="text-em">+3.10%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/eu.png" alt="EU" class="w-3 h-3 object-cover rounded-full"/> EUR <span class="text-em">+0.80%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/gb.png" alt="GB" class="w-3 h-3 object-cover rounded-full"/> GBP <span class="text-em">+0.45%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/jp.png" alt="JP" class="w-3 h-3 object-cover rounded-full"/> JPY <span class="text-red">-0.32%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-3 h-3 object-cover rounded-full"/> NASDAQ <span class="text-em">+1.20%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL" class="w-3 h-3 rounded-full"/> SOL <span class="text-em">+4.70%</span></span>
+        <span class="inline-flex items-center gap-1"><img src="https://flagcdn.com/w20/br.png" alt="BR" class="w-3 h-3 object-cover rounded-full"/> IBOV <span class="text-em">+0.90%</span></span>
+      </div>
+    </div>
+    <div class="shrink-0 flex items-center gap-4">
       <span class="hidden sm:inline">CNPJ 64.020.950/0001-60</span>
     </div>
   </div>
@@ -239,29 +351,21 @@
 
 <!-- HERO -->
 <section id="top" class="relative pt-16 pb-16 sm:pt-20 sm:pb-20 px-4 sm:px-6 overflow-hidden">
-  <div class="absolute inset-0 grid-bg-d"></div>
+  <div class="absolute inset-0 hero-bg"></div>
   <div class="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
     <!-- LEFT: text -->
     <div class="lg:col-span-7">
-      <span class="pill inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] mono uppercase tracking-widest font-medium">
-        <span class="live"></span>
-        Operações ao vivo &middot; Próximo saque dia 15
-      </span>
-      <h1 class="mt-7 text-5xl sm:text-6xl md:text-[80px] font-semibold leading-[0.98] tracking-tight">
-        Ganhe até <span class="text-em">30%</span><br/>
-        do seu investimento<br/>
-        em <span class="text-em">1 mês</span>.
+      <h1 class="mt-7 gsap-hero-title">
+        <span class="block text-5xl sm:text-6xl md:text-[80px] font-bold leading-[1.05] tracking-tight text-ink">Seu <span class="text-em">dinheiro</span></span>
+        <span class="block text-5xl sm:text-6xl md:text-[80px] font-light leading-[1.05] tracking-tight text-mute">trabalhando para você!</span>
+        <span class="block text-[13px] sm:text-[14px] mono uppercase tracking-[0.25em] text-em font-medium mt-5">Até 30% ao mês</span>
       </h1>
-      <p class="mt-6 text-lg sm:text-xl text-mute leading-relaxed max-w-xl">
-        Você investe, o CEO opera ao vivo no mercado financeiro e você acompanha cada resultado em tempo real.
+      <p class="mt-6 text-[14px] sm:text-[15px] text-mute leading-[1.7] tracking-wide max-w-sm gsap-hero-fade font-light">
+        Um trader profissional opera por você.<br class="hidden sm:inline"/>
+        Você só <span class="text-ink font-normal">recebe e divide o lucro</span>.
       </p>
-      <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 mono text-[11px] uppercase tracking-widest text-mute2">
-        <span class="flex items-center gap-1.5"><span class="text-em">&#x2713;</span> Conta gratuita</span>
-        <span class="flex items-center gap-1.5"><span class="text-em">&#x2713;</span> Sem mensalidade</span>
-        <span class="flex items-center gap-1.5"><span class="text-em">&#x2713;</span> Saques dia 1 e 15</span>
-      </div>
-      <div class="mt-7 flex flex-col sm:flex-row gap-3">
+      <div class="mt-7 flex flex-col sm:flex-row gap-3 gsap-hero-fade">
         <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
            class="btn-em px-8 py-5 rounded-md text-base inline-flex items-center justify-center gap-2 font-bold">
           Quero começar a lucrar <span aria-hidden="true">→</span>
@@ -270,7 +374,7 @@
     </div>
 
     <!-- RIGHT: stories wall -->
-    <aside class="lg:col-span-5" aria-labelledby="stories-heading">
+    <aside class="lg:col-span-5 gsap-hero-fade" aria-labelledby="stories-heading">
 
       <!-- HEADER CARD — radar scan border + terminal aesthetic -->
       <div class="radar-card stories-header-grain scanline-overlay mb-6 p-5 sm:p-6 relative z-0">
@@ -283,8 +387,8 @@
           </div>
 
           <h2 id="stories-heading" class="text-[26px] sm:text-[32px] lg:text-[28px] xl:text-[36px] font-extrabold leading-[1.05] tracking-tight mb-4">
-            <span class="text-ink/60">Resultados</span>
-            <span class="text-ink"> reais.</span><br/>
+            <span class="text-ink/60">Depoimento de</span>
+            <span class="text-ink"> pessoas reais.</span><br/>
             <span class="gradient-text-em">Clientes reais.</span>
           </h2>
 
@@ -309,10 +413,6 @@
               </span>
             </div>
           </div>
-
-          <!-- Output line -->
-          <div class="mono text-[10px] text-mute2/60 mt-4 tracking-wide typing-cursor">
-            <span class="text-em/60">→</span> carregando depoimentos</div>
         </div>
       </div>
 
@@ -342,47 +442,86 @@
 <!-- TICKER MERCADO -->
 <div class="border-y hairline bg-bg2 overflow-hidden">
   <div class="ticker whitespace-nowrap py-3 mono text-[12px] flex gap-6 items-center text-mute">
-    <span class="text-mute2">›</span>
-    <span>BTC/USD <span class="text-em num-tabular">+2.40</span></span>
-    <span class="text-line2">·</span>
-    <span>EUR/USD <span class="text-em num-tabular">+0.80</span></span>
-    <span class="text-line2">·</span>
-    <span>NASDAQ <span class="text-em num-tabular">+1.20</span></span>
-    <span class="text-line2">·</span>
-    <span>ETH/USD <span class="text-em num-tabular">+3.10</span></span>
-    <span class="text-line2">·</span>
-    <span>XAU <span class="text-em num-tabular">+0.50</span></span>
-    <span class="text-line2">·</span>
-    <span>IBOV <span class="text-em num-tabular">+0.90</span></span>
-    <span class="text-line2">·</span>
-    <span>S&amp;P <span class="text-red num-tabular">−0.20</span></span>
-    <span class="text-line2">·</span>
-    <span class="text-cy">● TELEGRAM LIVE</span>
-    <span class="text-line2">·</span>
-    <span>BTC/USD <span class="text-em num-tabular">+2.40</span></span>
-    <span class="text-line2">·</span>
-    <span>EUR/USD <span class="text-em num-tabular">+0.80</span></span>
-    <span class="text-line2">·</span>
-    <span>NASDAQ <span class="text-em num-tabular">+1.20</span></span>
-    <span class="text-line2">·</span>
-    <span>ETH/USD <span class="text-em num-tabular">+3.10</span></span>
-    <span class="text-line2">·</span>
-    <span>XAU <span class="text-em num-tabular">+0.50</span></span>
-    <span class="text-line2">·</span>
-    <span>IBOV <span class="text-em num-tabular">+0.90</span></span>
-    <span class="text-line2">·</span>
-    <span>S&amp;P <span class="text-red num-tabular">−0.20</span></span>
-    <span class="text-line2">·</span>
-    <span class="text-cy">● TELEGRAM LIVE</span>
+    <span class="text-mute2">&gt;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" class="w-4 h-4 rounded-full"/> BTC/USD <span class="text-em num-tabular">+2.40%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" class="w-4 h-4 rounded-full"/> ETH/USD <span class="text-em num-tabular">+3.10%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/eu.png" alt="EU" class="w-4 h-4 object-cover rounded-full"/> EUR/USD <span class="text-em num-tabular">+0.80%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/gb.png" alt="GB" class="w-4 h-4 object-cover rounded-full"/> GBP/USD <span class="text-em num-tabular">+0.45%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/jp.png" alt="JP" class="w-4 h-4 object-cover rounded-full"/> USD/JPY <span class="text-red num-tabular">-0.32%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/au.png" alt="AU" class="w-4 h-4 object-cover rounded-full"/> AUD/USD <span class="text-em num-tabular">+0.55%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/ca.png" alt="CA" class="w-4 h-4 object-cover rounded-full"/> USD/CAD <span class="text-red num-tabular">-0.18%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> NASDAQ <span class="text-em num-tabular">+1.20%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> S&amp;P 500 <span class="text-red num-tabular">-0.20%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> DOW JONES <span class="text-em num-tabular">+0.65%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/br.png" alt="BR" class="w-4 h-4 object-cover rounded-full"/> IBOV <span class="text-em num-tabular">+0.90%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none"><circle cx="12" cy="12" r="11" fill="#CFB53B"/><path d="M12 5v14M8 8h8M9 12h6M8 16h8" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round"/></svg> XAU/USD <span class="text-em num-tabular">+0.50%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none"><circle cx="12" cy="12" r="11" fill="#C0C0C0"/><path d="M12 5v14M8 8h8M9 12h6M8 16h8" stroke="#808080" stroke-width="1.5" stroke-linecap="round"/></svg> XAG/USD <span class="text-em num-tabular">+1.15%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL" class="w-4 h-4 rounded-full"/> SOL/USD <span class="text-em num-tabular">+4.70%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" alt="BNB" class="w-4 h-4 rounded-full"/> BNB/USD <span class="text-em num-tabular">+1.85%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/nz.png" alt="NZ" class="w-4 h-4 object-cover rounded-full"/> NZD/USD <span class="text-red num-tabular">-0.12%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/ch.png" alt="CH" class="w-4 h-4 object-cover rounded-full"/> USD/CHF <span class="text-em num-tabular">+0.28%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="text-cy inline-flex items-center gap-1"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> TELEGRAM LIVE</span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="BTC" class="w-4 h-4 rounded-full"/> BTC/USD <span class="text-em num-tabular">+2.40%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" class="w-4 h-4 rounded-full"/> ETH/USD <span class="text-em num-tabular">+3.10%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/eu.png" alt="EU" class="w-4 h-4 object-cover rounded-full"/> EUR/USD <span class="text-em num-tabular">+0.80%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/gb.png" alt="GB" class="w-4 h-4 object-cover rounded-full"/> GBP/USD <span class="text-em num-tabular">+0.45%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/jp.png" alt="JP" class="w-4 h-4 object-cover rounded-full"/> USD/JPY <span class="text-red num-tabular">-0.32%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/au.png" alt="AU" class="w-4 h-4 object-cover rounded-full"/> AUD/USD <span class="text-em num-tabular">+0.55%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/ca.png" alt="CA" class="w-4 h-4 object-cover rounded-full"/> USD/CAD <span class="text-red num-tabular">-0.18%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> NASDAQ <span class="text-em num-tabular">+1.20%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> S&amp;P 500 <span class="text-red num-tabular">-0.20%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/us.png" alt="US" class="w-4 h-4 object-cover rounded-full"/> DOW JONES <span class="text-em num-tabular">+0.65%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/br.png" alt="BR" class="w-4 h-4 object-cover rounded-full"/> IBOV <span class="text-em num-tabular">+0.90%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none"><circle cx="12" cy="12" r="11" fill="#CFB53B"/><path d="M12 5v14M8 8h8M9 12h6M8 16h8" stroke="#8B6914" stroke-width="1.5" stroke-linecap="round"/></svg> XAU/USD <span class="text-em num-tabular">+0.50%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" class="w-4 h-4" fill="none"><circle cx="12" cy="12" r="11" fill="#C0C0C0"/><path d="M12 5v14M8 8h8M9 12h6M8 16h8" stroke="#808080" stroke-width="1.5" stroke-linecap="round"/></svg> XAG/USD <span class="text-em num-tabular">+1.15%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/4128/small/solana.png" alt="SOL" class="w-4 h-4 rounded-full"/> SOL/USD <span class="text-em num-tabular">+4.70%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png" alt="BNB" class="w-4 h-4 rounded-full"/> BNB/USD <span class="text-em num-tabular">+1.85%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/nz.png" alt="NZ" class="w-4 h-4 object-cover rounded-full"/> NZD/USD <span class="text-red num-tabular">-0.12%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="inline-flex items-center gap-1.5"><img src="https://flagcdn.com/w20/ch.png" alt="CH" class="w-4 h-4 object-cover rounded-full"/> USD/CHF <span class="text-em num-tabular">+0.28%</span></span>
+    <span class="text-line2">&middot;</span>
+    <span class="text-cy inline-flex items-center gap-1"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> TELEGRAM LIVE</span>
   </div>
 </div>
-
 <!-- COMO FUNCIONA -->
 <section id="analise" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-3xl">
       <div class="mono text-[11px] uppercase tracking-widest text-cy">
-        <span class="text-mute2">[02]</span> Como funciona
+        <span class="text-mute2">[01]</span> Como funciona
       </div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Seu rendimento vem através do <span class="text-em">mercado financeiro</span> e não de novos membros.
@@ -395,44 +534,22 @@
     <!-- Provas sociais compactas — grid 2 linhas, scroll horizontal -->
     <div class="mt-8">
       <div class="flex items-center gap-1.5 mb-3">
-        <span class="w-2 h-2 rounded-full bg-em animate-pulse"></span>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-em"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
         <span class="mono text-[10px] uppercase tracking-widest text-mute2">Grupo do WhatsApp</span>
       </div>
-      <div class="overflow-x-auto scrollbar-hide">
-        <div class="grid grid-rows-2 grid-flow-col gap-2 w-max">
-          <a href="imagens/provas/Screenshot_1.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_1.png" alt="Prova social 1" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_2.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_2.png" alt="Prova social 2" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_3.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_3.png" alt="Prova social 3" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_4.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_4.png" alt="Prova social 4" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_5.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_5.png" alt="Prova social 5" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_6.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_6.png" alt="Prova social 6" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_7.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_7.png" alt="Prova social 7" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_8.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_8.png" alt="Prova social 8" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_9.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_9.png" alt="Prova social 9" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_10.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_10.png" alt="Prova social 10" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
-          <a href="imagens/provas/Screenshot_11.png" target="_blank" class="w-[140px] sm:w-[160px] rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group">
-            <img src="imagens/provas/Screenshot_11.png" alt="Prova social 11" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/>
-          </a>
+      <div class="proofs-scroll overflow-x-auto pb-4 -mx-4 px-4">
+        <div class="flex gap-3" style="width: max-content;">
+          <button type="button" data-proof="1" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_1.png" alt="Prova social 1" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="2" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_2.png" alt="Prova social 2" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="3" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_3.png" alt="Prova social 3" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="4" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_4.png" alt="Prova social 4" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="5" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_5.png" alt="Prova social 5" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="6" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_6.png" alt="Prova social 6" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="7" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_7.png" alt="Prova social 7" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="8" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_8.png" alt="Prova social 8" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="9" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_9.png" alt="Prova social 9" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="10" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_10.png" alt="Prova social 10" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
+          <button type="button" data-proof="11" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_11.png" alt="Prova social 11" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
         </div>
       </div>
     </div>
@@ -455,7 +572,7 @@
             <!-- Sidnei card -->
             <div class="mt-8 flex flex-col sm:flex-row items-center gap-5 bg-panel/50 border border-line rounded-xl p-5">
               <div class="shrink-0 w-36 h-36 rounded-xl overflow-hidden bg-em/20">
-                <img src="imagens/sidnei.png" alt="Sidnei Oliveira" class="w-full h-full object-cover object-top" style="image-rendering:auto; -webkit-font-smoothing:antialiased;" loading="lazy"/>
+                <img src="imagens/sidnei-militar.jpeg" alt="Sidnei Oliveira" class="w-full h-full object-cover object-top" style="image-rendering:auto; -webkit-font-smoothing:antialiased;" loading="lazy"/>
               </div>
               <div class="text-center sm:text-left">
                 <div class="text-lg font-bold">Sidnei Oliveira</div>
@@ -546,7 +663,7 @@
             <div class="w-10 h-10 rounded-md bg-em/10 border border-em/30 flex items-center justify-center text-em text-lg font-bold mono">3</div>
             <h4 class="mt-4 text-lg font-semibold">Transparência total</h4>
             <p class="mt-2 text-[14px] text-mute leading-relaxed">
-              Todas as operações são transmitidas ao vivo pelo Telegram, WhatsApp e Instagram. Você vê cada trade acontecendo em tempo real.
+              Todas as operações são transmitidas ao vivo pelo <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 inline"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</span>, <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 inline"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg> WhatsApp</span> e <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 inline"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg> Instagram</span>. Você vê cada trade acontecendo em tempo real.
             </p>
           </div>
         </div>
@@ -568,7 +685,7 @@
                 <li class="flex gap-2"><span class="text-em">&#x2713;</span> Lucro vem de operações reais no mercado</li>
                 <li class="flex gap-2"><span class="text-em">&#x2713;</span> Compra e venda diária de ativos financeiros</li>
                 <li class="flex gap-2"><span class="text-em">&#x2713;</span> Todos recebem com base na mesma operação</li>
-                <li class="flex gap-2"><span class="text-em">&#x2713;</span> Operações ao vivo no Telegram, WhatsApp e Instagram</li>
+                <li class="flex gap-2"><span class="text-em">&#x2713;</span> Operações ao vivo no <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 inline"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Telegram</span>, <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 inline"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg> WhatsApp</span> e <span class="inline-flex items-center gap-0.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 inline"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg> Instagram</span></li>
               </ul>
             </div>
           </div>
@@ -609,7 +726,7 @@
       </a>
       <a href="https://www.youtube.com/@royalbinaryoficial" target="_blank" rel="noopener"
          class="btn-ghost px-7 py-5 rounded-md text-base inline-flex items-center justify-center gap-2">
-        <span aria-hidden="true">&#x25B6;</span> Ver vídeos no YouTube
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg> Ver vídeos no YouTube
       </a>
     </div>
   </div>
@@ -625,7 +742,7 @@
 <section id="ganhos" class="py-24 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[05]</span> Formas de ganho</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[02]</span> Formas de ganho</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Três fontes extras de <span class="text-em">renda na plataforma</span>.
       </h2>
@@ -731,7 +848,7 @@
 <!-- PROBLEMA -->
 <section class="py-20 px-4 sm:px-6 border-t hairline">
   <div class="max-w-3xl mx-auto">
-    <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[06]</span> Problema do mercado</div>
+    <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[03]</span> Problema do mercado</div>
     <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
       Cansado de plataformas que prometem mundos e somem com seu dinheiro?
     </h2>
@@ -766,7 +883,7 @@
 <section id="planos" class="py-24 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[07]</span> Contratos disponíveis</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[04]</span> Contratos disponíveis</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Escolha o plano <span class="text-em">que combina com você</span>.
       </h2>
@@ -843,6 +960,16 @@
     <p class="mt-6 mono text-[11px] uppercase tracking-widest text-mute2">
       <span class="text-em">*</span> Rentabilidade variável baseada na performance real de mercado. Retornos podem variar conforme condições econômicas e não são garantidos.
     </p>
+
+    <!-- Countdown urgência -->
+    <div class="mt-10 flex flex-col items-center">
+      <div class="mono text-[11px] uppercase tracking-widest text-mute mb-4">Próximo ciclo de contratos fecha em</div>
+      <div id="countdown" class="flex gap-3 mono">
+        <div class="countdown-unit"><div class="num" id="cd-hours">00</div><div class="label">horas</div></div>
+        <div class="countdown-unit"><div class="num" id="cd-mins">00</div><div class="label">min</div></div>
+        <div class="countdown-unit"><div class="num" id="cd-secs">00</div><div class="label">seg</div></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -851,7 +978,7 @@
 <section id="bastidores" class="py-24 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[09]</span> Alcance global</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[05]</span> Alcance global</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Não vivemos só atrás de uma tela.
       </h2>
@@ -887,7 +1014,7 @@
 <section id="provas" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[10]</span> Prova social</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[06]</span> Prova social</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Números reais, <span class="text-em">comunidade real</span>.
       </h2>
@@ -896,7 +1023,7 @@
       </p>
     </div>
 
-    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line">
+    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line gsap-stats-grid">
       <div class="bg-bg p-7">
         <div class="text-5xl font-semibold mono num-tabular text-em">340<span class="text-2xl">+</span></div>
         <div class="mt-3 mono text-[11px] uppercase tracking-widest text-mute">Operações / mês</div>
@@ -920,8 +1047,8 @@
     </div>
 
     <div class="mt-12 flex flex-wrap gap-3">
-      <a href="https://www.instagram.com/royalbinary.io/" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm">Ver mais no Instagram →</a>
-      <a href="https://royalbinary.substack.com/" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm">Ler artigos no Substack →</a>
+      <a href="https://www.instagram.com/royalbinary.io/" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg> Ver mais no Instagram →</a>
+      <a href="https://royalbinary.substack.com/" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg> Ler artigos no Substack →</a>
     </div>
   </div>
 </section>
@@ -930,7 +1057,7 @@
 <section class="py-24 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[11]</span> Verificação</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[07]</span> Verificação</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Empresa real, <span class="text-em">com endereço real</span>.
       </h2>
@@ -965,7 +1092,7 @@
 <section id="comunidade" class="py-24 px-4 sm:px-6 border-t hairline">
   <div class="max-w-5xl mx-auto">
     <div class="max-w-2xl">
-      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[12]</span> Acesso restrito</div>
+      <div class="mono text-[11px] uppercase tracking-widest text-cy"><span class="text-mute2">[08]</span> Acesso restrito</div>
       <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight">
         Comunidade <span class="text-em">só para quem tem conta</span>.
       </h2>
@@ -1033,7 +1160,7 @@
 <!-- CTA FINAL -->
 <section class="py-32 px-4 sm:px-6 border-t hairline">
   <div class="max-w-3xl mx-auto text-center">
-    <div class="mono text-[11px] uppercase tracking-widest text-cy mb-6">[10] · open account</div>
+    <div class="mono text-[11px] uppercase tracking-widest text-cy mb-6">[10] · abrir conta</div>
     <h2 class="text-5xl sm:text-7xl font-semibold tracking-tight leading-[1.02]">
       Comece com uma conta<br/><span class="text-em">gratuita hoje.</span>
     </h2>
@@ -1075,14 +1202,33 @@
   </div>
 </footer>
 
+<!-- STICKY CTA MOBILE -->
+<div class="sticky-cta-mobile" id="sticky-cta">
+  <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+     class="btn-em w-full py-3.5 rounded-lg text-[14px] font-bold text-center flex items-center justify-center gap-2">
+    Abrir conta gratuita <span aria-hidden="true">→</span>
+  </a>
+</div>
+
 <!-- FLOATS -->
-<div class="fixed right-4 sm:right-6 z-[60] flex flex-col gap-3 bottom-24 sm:bottom-6">
-  <a href="https://www.youtube.com/@royalbinaryoficial" target="_blank" rel="noopener" aria-label="YouTube" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center text-white transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+<div class="fixed right-4 sm:right-6 z-[60] flex flex-col gap-3 bottom-[72px] sm:bottom-6">
   <a href="https://wa.me/5521993985720?text=Ol%C3%A1!%20Vi%20a%20landing%20da%20Royal%20Binary%20e%20quero%20saber%20mais." target="_blank" rel="noopener" aria-label="WhatsApp" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-em hover:bg-em2 flex items-center justify-center text-emTint transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg></a>
 </div>
 
 
 
+
+<!-- LIGHTBOX MODAL PROVAS SOCIAIS -->
+<div id="proof-modal" class="fixed inset-0 bg-black/95 z-[80] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="proof-modal-label">
+  <span id="proof-modal-label" class="sr-only">Prova social</span>
+  <button id="proof-close" type="button" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition z-10" aria-label="Fechar">&#xd7;</button>
+  <button id="proof-prev" type="button" class="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition z-10" aria-label="Anterior">&#x2039;</button>
+  <button id="proof-next" type="button" class="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-em text-white text-2xl flex items-center justify-center transition z-10" aria-label="Próxima">&#x203A;</button>
+  <div class="absolute bottom-6 left-1/2 -translate-x-1/2 mono text-[10px] uppercase tracking-widest text-white/60">
+    <span id="proof-counter">1</span> / 11
+  </div>
+  <img id="proof-img" src="" alt="Prova social" class="max-w-full max-h-[88vh] rounded-md shadow-2xl select-none" draggable="false"/>
+</div>
 
 <!-- LIGHTBOX MODAL DEPOIMENTOS -->
 <div id="story-modal" class="fixed inset-0 bg-black/95 z-[80] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="story-modal-label">
@@ -1180,6 +1326,380 @@
 })();
 </script>
 
+<script>
+(function(){
+  'use strict';
+  var TOTAL_PROOFS = 11;
+  var modal = document.getElementById('proof-modal');
+  var img = document.getElementById('proof-img');
+  var counter = document.getElementById('proof-counter');
+  var current = 1;
+  var prevFocus = null;
+
+  function openProof(n){
+    current = Math.max(1, Math.min(TOTAL_PROOFS, n));
+    counter.textContent = current;
+    img.src = 'imagens/provas/Screenshot_' + current + '.png';
+    prevFocus = document.activeElement;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function(){ document.getElementById('proof-close').focus(); }, 50);
+  }
+  function closeProof(){
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    img.src = '';
+    document.body.style.overflow = '';
+    if (prevFocus && prevFocus.focus) prevFocus.focus();
+  }
+  function nextProof(){ openProof(current >= TOTAL_PROOFS ? 1 : current + 1); }
+  function prevProof(){ openProof(current <= 1 ? TOTAL_PROOFS : current - 1); }
+
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.proof-thumb');
+    if (btn && btn.dataset.proof) openProof(parseInt(btn.dataset.proof, 10));
+  });
+  document.getElementById('proof-close').addEventListener('click', closeProof);
+  document.getElementById('proof-next').addEventListener('click', nextProof);
+  document.getElementById('proof-prev').addEventListener('click', prevProof);
+  modal.addEventListener('click', function(e){ if (e.target === modal) closeProof(); });
+
+  document.addEventListener('keydown', function(e){
+    if (modal.classList.contains('hidden')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeProof(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); nextProof(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prevProof(); }
+  });
+
+  var startX = 0, startY = 0, dragging = false;
+  img.addEventListener('pointerdown', function(e){
+    startX = e.clientX; startY = e.clientY; dragging = true;
+    img.setPointerCapture(e.pointerId);
+  });
+  img.addEventListener('pointerup', function(e){
+    if (!dragging) return;
+    dragging = false;
+    var dx = e.clientX - startX;
+    var dy = Math.abs(e.clientY - startY);
+    if (Math.abs(dx) > 40 && Math.abs(dx) > dy) {
+      if (dx < 0) nextProof(); else prevProof();
+    }
+  });
+  img.addEventListener('pointercancel', function(){ dragging = false; });
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    document.body.classList.add('gsap-ready');
+    return;
+  }
+  var hasSplitText = typeof SplitText !== 'undefined';
+  try { gsap.registerPlugin(ScrollTrigger); if (hasSplitText) gsap.registerPlugin(SplitText); } catch(e){}
+  document.body.classList.add('gsap-ready');
+
+  var isMobile = window.innerWidth < 768;
+
+  var mm = gsap.matchMedia();
+  mm.add("(prefers-reduced-motion: no-preference)", function(){
+
+    // ========== HERO — SplitText ==========
+    var heroTitle = document.querySelector('.gsap-hero-title');
+    if (heroTitle && hasSplitText) {
+      var splitType = isMobile ? 'words' : 'chars,words';
+      var split = new SplitText(heroTitle, { type: splitType });
+      var targets = isMobile ? split.words : split.chars;
+      gsap.from(targets, {
+        opacity: 0,
+        y: isMobile ? 20 : 40,
+        rotateX: isMobile ? 0 : -40,
+        duration: isMobile ? 0.5 : 0.7,
+        stagger: isMobile ? 0.06 : 0.02,
+        ease: isMobile ? 'power2.out' : 'back.out(1.7)',
+        delay: 0.2
+      });
+    } else if (heroTitle) {
+      gsap.from(heroTitle, { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out', delay: 0.2 });
+    }
+
+    // Hero fade-up
+    gsap.from('.gsap-hero-fade', {
+      opacity: 0,
+      y: isMobile ? 20 : 30,
+      duration: isMobile ? 0.6 : 0.8,
+      stagger: 0.15,
+      ease: 'power2.out',
+      delay: isMobile ? 0.5 : 0.8
+    });
+
+    // ========== SEÇÕES — reveal de títulos ==========
+    document.querySelectorAll('section h2').forEach(function(h2){
+      if (hasSplitText) {
+        var splitH2 = new SplitText(h2, { type: 'words' });
+        gsap.from(splitH2.words, {
+          opacity: 0,
+          y: isMobile ? 15 : 30,
+          duration: isMobile ? 0.4 : 0.6,
+          stagger: isMobile ? 0.03 : 0.04,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: h2, start: 'top 88%', once: true }
+        });
+      } else {
+        gsap.from(h2, { opacity: 0, y: 15, duration: 0.5, ease: 'power2.out', scrollTrigger: { trigger: h2, start: 'top 88%', once: true } });
+      }
+    });
+
+    // ========== CARDS — stagger (skip hero stories) ==========
+    document.querySelectorAll('section .grid').forEach(function(grid){
+      if (grid.closest('.stories-wall-mask') || grid.classList.contains('lg:hidden')) return;
+      var children = grid.children;
+      if (children.length < 2) return;
+      gsap.from(children, {
+        opacity: 0,
+        y: isMobile ? 20 : 40,
+        duration: isMobile ? 0.4 : 0.6,
+        stagger: isMobile ? 0.08 : 0.1,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: grid, start: 'top 90%', once: true }
+      });
+    });
+
+    // ========== STATS — contagem animada ==========
+    var statsGrid = document.querySelector('.gsap-stats-grid');
+    if (statsGrid) {
+      var statEls = statsGrid.querySelectorAll('.text-5xl');
+      ScrollTrigger.create({
+        trigger: statsGrid,
+        start: 'top 85%',
+        once: true,
+        onEnter: function(){
+          statEls.forEach(function(el){
+            var text = el.textContent;
+            var suffix = '';
+            var num = 0;
+            if (text.indexOf('k') !== -1) {
+              num = 1000; suffix = '+';
+            } else if (text.indexOf('%') !== -1) {
+              num = 100; suffix = '%';
+            } else {
+              num = parseInt(text);
+              suffix = text.indexOf('+') !== -1 ? '+' : '';
+            }
+            var obj = { val: 0 };
+            gsap.to(obj, {
+              val: num,
+              duration: isMobile ? 1.2 : 1.8,
+              ease: 'power2.out',
+              onUpdate: function(){
+                var v = Math.round(obj.val);
+                if (num === 1000) {
+                  el.innerHTML = (v >= 1000 ? '1k' : v) + '<span class="text-2xl">+</span>';
+                } else if (suffix === '%') {
+                  el.innerHTML = v + '<span class="text-2xl">%</span>';
+                } else {
+                  el.innerHTML = v + '<span class="text-2xl">+</span>';
+                }
+              }
+            });
+          });
+        }
+      });
+    }
+
+    // ========== TICKER — parallax (desktop only) ==========
+    if (!isMobile) {
+      var ticker = document.querySelector('.ticker');
+      if (ticker) {
+        gsap.to(ticker, {
+          x: -200,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: ticker,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+          }
+        });
+      }
+    }
+
+    // ========== STICKY CTA MOBILE ==========
+    var stickyCta = document.getElementById('sticky-cta');
+    var heroSection = document.getElementById('top');
+    if (stickyCta && heroSection) {
+      ScrollTrigger.create({
+        trigger: heroSection,
+        start: 'bottom 20%',
+        onEnter: function(){ stickyCta.classList.add('visible'); },
+        onLeaveBack: function(){ stickyCta.classList.remove('visible'); }
+      });
+    }
+
+    // ========== CTAs — fade-up ==========
+    document.querySelectorAll('.btn-em, .btn-ghost').forEach(function(btn){
+      if (btn.closest('.gsap-hero-fade') || btn.closest('header') || btn.closest('nav')) return;
+      gsap.from(btn, {
+        opacity: 0, y: isMobile ? 12 : 20,
+        duration: 0.5, ease: 'power2.out',
+        scrollTrigger: { trigger: btn, start: 'top 92%', once: true }
+      });
+    });
+
+    // ========== PARAGRAPHS — fade sutil ==========
+    document.querySelectorAll('section > div > div > p, section > div > p').forEach(function(p){
+      gsap.from(p, {
+        opacity: 0, y: isMobile ? 10 : 15,
+        duration: isMobile ? 0.4 : 0.6,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: p, start: 'top 90%', once: true }
+      });
+    });
+  });
+});
+
+// ========== #6 — VANILLA TILT nos cards de plano ==========
+(function(){
+  if (typeof VanillaTilt === 'undefined' || window.innerWidth < 768) return;
+  var cards = document.querySelectorAll('#planos article');
+  cards.forEach(function(card){
+    VanillaTilt.init(card, {
+      max: 6,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.12,
+      scale: 1.02
+    });
+  });
+})();
+
+
+// ========== #9 — COUNTDOWN TIMER ==========
+(function(){
+  var h = document.getElementById('cd-hours');
+  var m = document.getElementById('cd-mins');
+  var s = document.getElementById('cd-secs');
+  if (!h || !m || !s) return;
+
+  var KEY = 'rb_countdown_end';
+  var stored = localStorage.getItem(KEY);
+  var end;
+  if (stored && parseInt(stored) > Date.now()) {
+    end = parseInt(stored);
+  } else {
+    end = Date.now() + 24 * 60 * 60 * 1000;
+    localStorage.setItem(KEY, end);
+  }
+
+  function pad(n){ return String(n).padStart(2, '0'); }
+  function tick(){
+    var diff = Math.max(0, end - Date.now());
+    var hrs = Math.floor(diff / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    var secs = Math.floor((diff % 60000) / 1000);
+    h.textContent = pad(hrs);
+    m.textContent = pad(mins);
+    s.textContent = pad(secs);
+    if (diff <= 0) {
+      end = Date.now() + 24 * 60 * 60 * 1000;
+      localStorage.setItem(KEY, end);
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+</script>
+
+<script>
+// ========== AFFILIATE REFERRAL LINK ==========
+(function(){
+  var KEY = 'rb_affiliate_link';
+  var bar = document.getElementById('aff-bar');
+  var inputWrap = document.getElementById('aff-input');
+  var activeWrap = document.getElementById('aff-active');
+  var input = document.getElementById('aff-link');
+  var saveBtn = document.getElementById('aff-save');
+  var copyBtn = document.getElementById('aff-copy');
+  var changeBtn = document.getElementById('aff-change');
+
+  if (!bar) return;
+
+  function replaceAllCTAs(url) {
+    document.querySelectorAll('a[href*="royalbinary.io"]').forEach(function(a) {
+      a.href = url;
+    });
+  }
+
+  function getShareUrl(url) {
+    return location.origin + location.pathname + '?ref=' + encodeURIComponent(url);
+  }
+
+  function showActive(url) {
+    inputWrap.classList.add('hidden');
+    activeWrap.classList.remove('hidden');
+    activeWrap.classList.add('flex');
+    bar.classList.remove('hidden');
+    replaceAllCTAs(url);
+  }
+
+  function showInput() {
+    activeWrap.classList.add('hidden');
+    activeWrap.classList.remove('flex');
+    inputWrap.classList.remove('hidden');
+    inputWrap.classList.add('flex');
+    bar.classList.remove('hidden');
+    input.value = '';
+    input.focus();
+  }
+
+  function setLink(url) {
+    localStorage.setItem(KEY, url);
+    showActive(url);
+  }
+
+  // Check URL param first
+  var params = new URLSearchParams(location.search);
+  var refParam = params.get('ref');
+
+  if (refParam) {
+    setLink(refParam);
+  } else {
+    var stored = localStorage.getItem(KEY);
+    if (stored) {
+      showActive(stored);
+    } else {
+      showInput();
+    }
+  }
+
+  saveBtn.addEventListener('click', function() {
+    var val = input.value.trim();
+    if (!val) { input.focus(); return; }
+    setLink(val);
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { saveBtn.click(); }
+  });
+
+  copyBtn.addEventListener('click', function() {
+    var stored = localStorage.getItem(KEY);
+    if (!stored) return;
+    var shareUrl = getShareUrl(stored);
+    navigator.clipboard.writeText(shareUrl).then(function() {
+      copyBtn.textContent = 'Copiado!';
+      setTimeout(function() { copyBtn.textContent = 'Copiar link'; }, 2000);
+    });
+  });
+
+  changeBtn.addEventListener('click', function() {
+    localStorage.removeItem(KEY);
+    showInput();
+    replaceAllCTAs('https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user');
+  });
+})();
+</script>
 </body>
 </html>
 

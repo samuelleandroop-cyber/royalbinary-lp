@@ -697,10 +697,10 @@
 
 
 
-    <!-- Diferencial: não é pirâmide -->
+    <!-- Diferencial do modelo -->
     <div class="mt-10 border hairline rounded-md overflow-hidden">
       <div class="border-b hairline bg-panel2 px-6 h-10 flex items-center mono text-[14px] uppercase tracking-widest text-mute font-semibold">
-        Por que não é pirâmide
+        Diferencial do modelo
       </div>
       <div class="bg-bg p-7 sm:p-10">
         <div class="grid sm:grid-cols-3 gap-8">
@@ -715,7 +715,7 @@
             <div class="w-10 h-10 rounded-md bg-em/10 border border-em/30 flex items-center justify-center text-em text-lg font-bold mono">2</div>
             <h4 class="mt-4 text-lg font-semibold">Risco compartilhado</h4>
             <p class="mt-2 text-[14px] text-mute leading-relaxed">
-              Em pirâmides, quem está no topo sempre ganha. Aqui, se o mercado não performa, ninguém ganha. A empresa assume o mesmo risco que você.
+              Se o mercado não performa, ninguém ganha. A empresa assume o mesmo risco que você. Resultado real, compartilhado.
             </p>
           </div>
           <div>
@@ -730,7 +730,7 @@
         <div class="mt-10 border-t hairline pt-8">
           <div class="grid sm:grid-cols-2 gap-6">
             <div class="border hairline rounded-md p-5 bg-red/5 border-red/20">
-              <div class="mono text-[11px] uppercase tracking-widest text-red">Pirâmide financeira</div>
+              <div class="mono text-[11px] uppercase tracking-widest text-red">Empresas fraudulentas</div>
               <ul class="mt-3 space-y-2 text-[14px] text-mute">
                 <li class="flex gap-2"><span class="text-red">&#x2717;</span> Lucro vem de novos participantes</li>
                 <li class="flex gap-2"><span class="text-red">&#x2717;</span> Sem produto ou operação real</li>
@@ -1508,6 +1508,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // ========== SEÇÕES — reveal de títulos ==========
     document.querySelectorAll('section h2').forEach(function(h2){
+      if (h2.closest('.gsap-hero-fade') || h2.querySelector('.gradient-text-em')) {
+        gsap.from(h2, { opacity: 0, y: 15, duration: 0.5, ease: 'power2.out', scrollTrigger: { trigger: h2, start: 'top 88%', once: true } });
+        return;
+      }
       if (hasSplitText) {
         var splitH2 = new SplitText(h2, { type: 'words' });
         gsap.from(splitH2.words, {

@@ -39,7 +39,7 @@ Landing page de conversao para a Royal Binary, empresa de investimento em opcoes
 ## Assets
 - `imagens/` - logo (3 versoes), sidnei.png, video-thumb.jpg
 - `imagens/provas/` - Screenshot_1.png ate Screenshot_11.png
-- `videos/` - 01_processed.mp4 ate 50_processed.mp4 (depoimentos)
+- `videos/` - 01_processed.mp4 ate 28_processed.mp4 (depoimentos)
 
 ## CSS customizado importante
 - `.radar-card` - Borda animada com gradiente conico (efeito radar scan)

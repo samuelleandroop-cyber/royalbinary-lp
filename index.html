@@ -4,7 +4,16 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Royal Binary — Trading Desk</title>
-<meta name="description" content="A maioria das plataformas opera no escuro. A Royal Binary não. Modelo 50/50 com transparência radical." />
+<meta name="description" content="Seu dinheiro trabalhando para você. Até 30% ao mês. Um trader profissional opera por você." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Royal Binary — Seu dinheiro trabalhando para você" />
+<meta property="og:description" content="Até 30% ao mês. Um trader profissional opera por você. Você só recebe e divide o lucro." />
+<meta property="og:image" content="https://royalbinary-lp.vercel.app/imagens/og-image.png" />
+<meta property="og:url" content="https://royalbinary-lp.vercel.app" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Royal Binary — Seu dinheiro trabalhando para você" />
+<meta name="twitter:description" content="Até 30% ao mês. Um trader profissional opera por você." />
+<meta name="twitter:image" content="https://royalbinary-lp.vercel.app/imagens/og-image.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -383,7 +392,7 @@
 </header>
 
 <!-- HERO -->
-<section id="top" class="relative pt-6 pb-16 sm:pt-10 sm:pb-20 px-4 sm:px-6 overflow-hidden">
+<section id="top" class="relative pt-6 pb-10 sm:pt-8 sm:pb-14 px-4 sm:px-6 overflow-hidden">
   <div class="absolute inset-0 hero-bg"></div>
   <div class="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
@@ -399,7 +408,7 @@
         Você só <span class="text-ink font-normal">recebe e divide o lucro</span>.
       </p>
       <div class="mt-7 flex flex-col sm:flex-row gap-3 gsap-hero-fade">
-        <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
+        <a id="hero-cta" href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
            class="btn-em px-8 py-5 rounded-md text-base inline-flex items-center justify-center gap-2 font-bold">
           <span data-i18n="hero.cta">Quero começar a lucrar</span> <span aria-hidden="true">→</span>
         </a>
@@ -411,7 +420,7 @@
       <h2 class="text-2xl sm:text-3xl lg:text-[28px] xl:text-[36px] font-extrabold leading-[1.1] tracking-tight mb-6 text-center lg:text-left" data-i18n-html="hero.what">
         <span class="text-ink">O QUE É A </span><span class="gradient-text-em">ROYAL BINARY?</span>
       </h2>
-      <a id="dl-vertical" href="videos/motion-vertical.mp4" download="royal-binary.mp4" class="hidden mb-4 px-5 py-2.5 rounded-lg text-[14px] font-semibold inline-flex items-center gap-2 cursor-pointer transition border-0" style="text-decoration:none;background:#2563EB;color:#fff;">
+      <a id="dl-vertical" href="videos/motion-vertical-pt.mp4" download="royal-binary-pt.mp4" class="hidden mb-4 px-5 py-2.5 rounded-lg text-[14px] font-semibold inline-flex items-center gap-2 cursor-pointer transition border-0" style="text-decoration:none;background:#2563EB;color:#fff;">
         <span>&#x2B07;</span> <span data-i18n="dl.btn">Baixar video de compartilhamento</span>
       </a>
       <div class="relative w-full rounded-xl overflow-hidden border hairline bg-bg2" style="aspect-ratio:16/9">
@@ -434,7 +443,7 @@
 </section>
 
 <!-- DEPOIMENTOS -->
-<section id="depoimentos" class="py-16 sm:py-20 bg-bg">
+<section id="depoimentos" class="py-10 sm:py-14 bg-bg">
   <div class="max-w-4xl mx-auto px-4 sm:px-6">
 
   <!-- HEADER CARD — radar scan border + terminal aesthetic -->
@@ -569,7 +578,7 @@
   </div>
 </div>
 <!-- COMO FUNCIONA -->
-<section id="analise" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
+<section id="analise" class="py-14 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-3xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n="how.label">
@@ -585,10 +594,10 @@
 
     <!-- Provas sociais compactas — grid 2 linhas, scroll horizontal -->
     <div class="mt-8">
-      <div class="flex items-center gap-1.5 mb-3">
-        <svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5 text-em"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
-        <span class="mono text-[10px] uppercase tracking-widest text-mute2" data-i18n="how.wagroup">Grupo do WhatsApp</span>
-      </div>
+      <button type="button" class="gated-group inline-flex items-center gap-2 mb-3 px-4 py-2 rounded-lg text-white font-semibold text-[13px] transition hover:opacity-90 cursor-pointer" style="background:#25D366;" data-group-url="https://chat.whatsapp.com/Gihe8CE1b3uHjxpQjFuvNP?mode=gi_t">
+        <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/></svg>
+        <span data-i18n="how.wagroup">Entrar no grupo do WhatsApp</span>
+      </button>
       <div class="proofs-scroll overflow-x-auto pb-4 -mx-4 px-4">
         <div class="flex gap-3" style="width: max-content;">
           <button type="button" data-proof="1" class="proof-thumb shrink-0 w-44 sm:w-52 rounded-lg overflow-hidden border border-line hover:border-em/50 transition-all duration-200 group cursor-pointer"><img src="imagens/provas/Screenshot_1.png" alt="Prova social 1" class="w-full h-auto group-hover:scale-105 transition-transform duration-200" loading="lazy"/></button>
@@ -607,7 +616,7 @@
     </div>
 
     <!-- Modelo de operação -->
-    <div class="mt-12 border hairline rounded-md overflow-hidden">
+    <div class="mt-8 border hairline rounded-md overflow-hidden">
       <div class="border-b hairline bg-panel2 px-6 h-10 flex items-center mono text-[14px] uppercase tracking-widest text-mute font-semibold">
         <span data-i18n="how.model">Modelo de operação</span>
       </div>
@@ -772,7 +781,7 @@
 
 
     <!-- CTA -->
-    <div class="mt-14 flex flex-col sm:flex-row gap-3 justify-center items-center">
+    <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center items-center">
       <a href="https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user" target="_blank" rel="noopener"
          class="btn-em px-8 py-5 rounded-md text-base inline-flex items-center justify-center gap-2 font-bold">
         <span data-i18n="how.cta">Abrir minha conta gratuita</span> <span aria-hidden="true">&#x2192;</span>
@@ -792,7 +801,7 @@
 
 
 <!-- PROVAS SOCIAIS -->
-<section id="provas" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
+<section id="provas" class="py-14 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="proof.label"><span class="text-mute2">[06]</span> Prova social</div>
@@ -804,7 +813,7 @@
       </p>
     </div>
 
-    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line gsap-stats-grid">
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line gsap-stats-grid">
       <div class="bg-bg p-7">
         <div class="text-5xl font-semibold mono num-tabular text-em">340<span class="text-2xl">+</span></div>
         <div class="mt-3 mono text-[11px] uppercase tracking-widest text-mute" data-i18n="proof.opsmonth">Operações / mês</div>
@@ -827,14 +836,14 @@
       </div>
     </div>
 
-    <div class="mt-12 flex flex-wrap gap-3">
+    <div class="mt-8 flex flex-wrap gap-3">
       <a href="https://www.instagram.com/royalbinary.io?igsh=MXYxbTVuYnM3aXJtMA==" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.897 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.897-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.645-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/></svg> <span data-i18n="proof.insta">Ver mais no Instagram →</span></a>
       <a href="https://royalbinary.substack.com/" target="_blank" rel="noopener" class="btn-ghost px-6 py-3 rounded-md text-sm inline-flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg> <span data-i18n="proof.substackbtn">Ler artigos no Substack →</span></a>
     </div>
   </div>
 </section>
 <!-- TRUST -->
-<section class="py-24 px-4 sm:px-6 border-t hairline">
+<section class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="trust.label"><span class="text-mute2">[07]</span> Verificação</div>
@@ -842,7 +851,7 @@
         Empresa real, <span class="text-em">com endereço real</span>.
       </h2>
     </div>
-    <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line">
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-line">
       <div class="bg-bg p-6">
         <div class="mono text-[10px] uppercase tracking-widest text-em" data-i18n="trust.company">razão social</div>
         <div class="mt-3 text-lg font-semibold">Royal Binary LTDA</div>
@@ -869,7 +878,7 @@
 
 
 <!-- BASTIDORES -->
-<section id="bastidores" class="py-24 px-4 sm:px-6 border-t hairline">
+<section id="bastidores" class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="behind.label"><span class="text-mute2">[05]</span> Alcance global</div>
@@ -879,7 +888,7 @@
       <p class="mt-5 text-[15px] text-mute leading-relaxed" data-i18n-html="behind.desc">Encontros presenciais com investidores em <span class="text-ink">+6 países</span> e principais cidades brasileiras.</p>
     </div>
 
-    <div class="mt-12 grid grid-cols-3 sm:grid-cols-6 gap-px bg-line border hairline rounded-md overflow-hidden">
+    <div class="mt-8 grid grid-cols-3 sm:grid-cols-6 gap-px bg-line border hairline rounded-md overflow-hidden">
       <div class="bg-bg p-5 text-center flex flex-col items-center"><img src="https://flagcdn.com/w80/br.png" alt="Brasil" class="w-12 h-8 object-cover rounded-sm shadow-md" loading="lazy"/><div class="mono text-[10px] uppercase tracking-widest text-mute mt-3" data-i18n="behind.country.br">brasil</div></div>
       <div class="bg-bg p-5 text-center flex flex-col items-center"><img src="https://flagcdn.com/w80/us.png" alt="EUA" class="w-12 h-8 object-cover rounded-sm shadow-md" loading="lazy"/><div class="mono text-[10px] uppercase tracking-widest text-mute mt-3" data-i18n="behind.country.us">eua</div></div>
       <div class="bg-bg p-5 text-center flex flex-col items-center"><img src="https://flagcdn.com/w80/pt.png" alt="Portugal" class="w-12 h-8 object-cover rounded-sm shadow-md" loading="lazy"/><div class="mono text-[10px] uppercase tracking-widest text-mute mt-3" data-i18n="behind.country.pt">portugal</div></div>
@@ -905,7 +914,7 @@
 </section>
 
 <!-- PLANOS -->
-<section id="planos" class="py-24 px-4 sm:px-6 border-t hairline">
+<section id="planos" class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="plans.label"><span class="text-mute2">[04]</span> Contratos disponíveis</div>
@@ -917,7 +926,7 @@
       </p>
     </div>
 
-    <div class="mt-12 grid md:grid-cols-3 gap-px bg-line border hairline rounded-md overflow-hidden">
+    <div class="mt-8 grid md:grid-cols-3 gap-px bg-line border hairline rounded-md overflow-hidden">
       <article class="bg-bg p-7 flex flex-col">
         <div class="flex items-center justify-between">
           <div class="mono text-[11px] uppercase tracking-widest text-mute2" data-i18n="plans.label01">Plano · 01</div>
@@ -1000,7 +1009,7 @@
 
 
 <!-- PROBLEMA -->
-<section class="py-20 px-4 sm:px-6 border-t hairline">
+<section class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-3xl mx-auto">
     <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="problem.label"><span class="text-mute2">[03]</span> Problema do mercado</div>
     <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-tight" data-i18n="problem.title">
@@ -1034,7 +1043,7 @@
 
 
 <!-- FORMAS DE GANHO -->
-<section id="ganhos" class="py-24 px-4 sm:px-6 border-t hairline">
+<section id="ganhos" class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-7xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="earn.label"><span class="text-mute2">[02]</span> Formas de ganho</div>
@@ -1046,7 +1055,7 @@
       </p>
     </div>
 
-    <div class="mt-12 bg-bg border hairline rounded-md panel-glow overflow-hidden">
+    <div class="mt-8 bg-bg border hairline rounded-md panel-glow overflow-hidden">
       <div class="border-b hairline bg-panel2 px-6 py-3 flex items-center justify-between mono text-[14px] uppercase tracking-widest text-mute font-semibold">
         <span data-i18n="earn.managertitle">plano · de · gerentes</span>
         <span class="text-em" data-i18n="earn.active">[ ativo ]</span>
@@ -1141,7 +1150,7 @@
 </section>
 
 <!-- COMUNIDADE LOCKED -->
-<section id="comunidade" class="py-24 px-4 sm:px-6 border-t hairline">
+<section id="comunidade" class="py-14 px-4 sm:px-6 border-t hairline">
   <div class="max-w-5xl mx-auto">
     <div class="max-w-2xl">
       <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="community.label"><span class="text-mute2">[08]</span> Acesso restrito</div>
@@ -1153,7 +1162,7 @@
       </p>
     </div>
 
-    <div class="mt-12 border hairline bg-panel rounded-md overflow-hidden divide-y divide-line">
+    <div class="mt-8 border hairline bg-panel rounded-md overflow-hidden divide-y divide-line">
       <button type="button" class="gated-group w-full px-6 py-5 flex items-center justify-between hover:bg-panel2 transition cursor-pointer" data-group-url="https://t.me/+G8LiyF4ok7cyYTUx">
         <div class="flex items-center gap-4">
           <div class="w-10 h-10 rounded-md border hairline flex items-center justify-center text-em"><svg viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
@@ -1194,12 +1203,12 @@
 </section>
 
 <!-- FAQ -->
-<section id="faq" class="py-24 px-4 sm:px-6 border-t hairline bg-bg2">
+<section id="faq" class="py-14 px-4 sm:px-6 border-t hairline bg-bg2">
   <div class="max-w-3xl mx-auto">
     <div class="mono text-[15px] uppercase tracking-widest text-em font-semibold" data-i18n-html="faq.label"><span class="text-mute2">[09]</span> FAQ</div>
     <h2 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight" data-i18n="faq.title">Perguntas frequentes.</h2>
 
-    <div class="mt-12 border-t hairline">
+    <div class="mt-8 border-t hairline">
       <details class="border-b hairline py-5 group"><summary class="flex justify-between items-center font-medium"><span data-i18n="faq.q1">A Royal Binary é uma empresa registrada?</span><span class="chev">▾</span></summary><p class="mt-3 text-mute text-[14px]"><span data-i18n="faq.a1">Sim. Royal Binary LTDA, CNPJ 64.020.950/0001-60, com sede na Avenida Paulista, 807, São Paulo.</span></p></details>
       <details class="border-b hairline py-5 group"><summary class="flex justify-between items-center font-medium"><span data-i18n="faq.q2">Como funciona o modelo 50/50?</span><span class="chev">▾</span></summary><p class="mt-3 text-mute text-[14px]"><span data-i18n="faq.a2">Os investidores ficam com metade dos lucros gerados; a Royal Binary retém a outra metade como tarifa.</span></p></details>
       <details class="border-b hairline py-5 group"><summary class="flex justify-between items-center font-medium"><span data-i18n="faq.q3">Como sei que as operações são reais?</span><span class="chev">▾</span></summary><p class="mt-3 text-mute text-[14px]"><span data-i18n="faq.a3">Após criar conta gratuita, você recebe acesso aos canais oficiais onde toda operação é publicada em tempo real.</span></p></details>
@@ -1210,7 +1219,7 @@
 </section>
 
 <!-- CTA FINAL -->
-<section class="py-32 px-4 sm:px-6 border-t hairline">
+<section class="py-16 px-4 sm:px-6 border-t hairline">
   <div class="max-w-3xl mx-auto text-center">
     <div class="mono text-[11px] uppercase tracking-widest text-cy mb-6" data-i18n="cta.label">[10] · abrir conta</div>
     <h2 class="text-5xl sm:text-7xl font-semibold tracking-tight leading-[1.02]" data-i18n-html="cta.title">
@@ -2086,12 +2095,22 @@ document.addEventListener('DOMContentLoaded', function(){
 // ========== AFFILIATE REFERRAL LINK ==========
 (function(){
   function encodeRef(url) {
+    var m = url.match(/app\.royalbinary\.io\/([^/]+)\/auth\/sign-up\?ref=(.+)/i);
+    if (m) {
+      var compact = m[1] + '|' + m[2];
+      return btoa(compact).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
     return btoa(url).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
   function decodeRef(code) {
     var b64 = code.replace(/-/g, '+').replace(/_/g, '/');
     while (b64.length % 4) b64 += '=';
-    return atob(b64);
+    var decoded = atob(b64);
+    if (decoded.indexOf('|') !== -1) {
+      var parts = decoded.split('|');
+      return 'https://app.royalbinary.io/' + parts[0] + '/auth/sign-up?ref=' + parts[1];
+    }
+    return decoded;
   }
 
   var savedLink = null;
@@ -2165,7 +2184,35 @@ document.addEventListener('DOMContentLoaded', function(){
     }, 300);
   }
 
-  // Check URL param first
+  function isValidRBLink(url) {
+    return /^https?:\/\/(www\.)?app\.royalbinary\.io\/.+\/auth\/sign-up/i.test(url);
+  }
+
+  var INVESTOR_URL = 'https://lead-finder-rouge.vercel.app';
+  var heroCta = document.getElementById('hero-cta');
+  var heroCtaOrigHref = heroCta ? heroCta.href : '';
+  var heroCtaOrigHTML = heroCta ? heroCta.innerHTML : '';
+  var heroCtaOrigClass = heroCta ? heroCta.className : '';
+
+  function activateInvestorBtn() {
+    if (!heroCta) return;
+    heroCta.href = INVESTOR_URL;
+    heroCta.innerHTML = '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg> <span>Ache o seu investidor aqui</span>';
+    heroCta.className = 'px-8 py-5 rounded-md text-base inline-flex items-center justify-center gap-2 font-bold transition';
+    heroCta.style.background = '#2563EB';
+    heroCta.style.color = '#fff';
+  }
+
+  function resetHeroCta() {
+    if (!heroCta) return;
+    heroCta.href = heroCtaOrigHref;
+    heroCta.innerHTML = heroCtaOrigHTML;
+    heroCta.className = heroCtaOrigClass;
+    heroCta.style.background = '';
+    heroCta.style.color = '';
+  }
+
+  // Check URL param first, then localStorage
   var params = new URLSearchParams(location.search);
   var refParam = params.get('ref');
   if (!refParam) {
@@ -2177,7 +2224,14 @@ document.addEventListener('DOMContentLoaded', function(){
   if (refParam) {
     replaceAllCTAs(refParam);
   } else {
-    showLocked();
+    var stored = localStorage.getItem('rb_aff_link');
+    if (stored) {
+      savedLink = stored;
+      showActive(stored);
+      if (isValidRBLink(stored)) activateInvestorBtn();
+    } else {
+      showLocked();
+    }
   }
 
   createBtn.addEventListener('click', function() {
@@ -2202,8 +2256,18 @@ document.addEventListener('DOMContentLoaded', function(){
   saveBtn.addEventListener('click', function() {
     var val = input.value.trim();
     if (!val) { input.focus(); return; }
+    if (!isValidRBLink(val)) {
+      input.style.borderColor = '#ef4444';
+      input.setAttribute('placeholder', 'Cole um link válido da Royal Binary');
+      input.value = '';
+      input.focus();
+      setTimeout(function() { input.style.borderColor = ''; input.setAttribute('placeholder', 'Cole seu link de indicação aqui'); }, 3000);
+      return;
+    }
     savedLink = val;
+    localStorage.setItem('rb_aff_link', val);
     showActive(val);
+    activateInvestorBtn();
   });
 
   input.addEventListener('keydown', function(e) {
@@ -2221,8 +2285,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
   changeBtn.addEventListener('click', function() {
     savedLink = null;
+    localStorage.removeItem('rb_aff_link');
     showInput(false);
     replaceAllCTAs('https://app.royalbinary.io/pt-BR/auth/sign-up?ref=user');
+    resetHeroCta();
   });
 })();
 
@@ -2273,7 +2339,25 @@ document.addEventListener('DOMContentLoaded', function(){
   var waSignup = document.getElementById('wa-gate-signup');
   if (!waFloat || !waGate) return;
 
-  var waUrl = 'https://wa.me/5511936209511?text=Ol%C3%A1%2C%20vi%20sobre%20a%20Royal%20Binary%20e%20quero%20saber%20mais%20sobre';
+  var waMessages = {
+    pt: 'Olá, vi sobre a Royal Binary e quero saber mais',
+    en: 'Hi, I saw about Royal Binary and I want to know more',
+    es: 'Hola, vi sobre Royal Binary y quiero saber más',
+    fr: 'Bonjour, j\'ai vu Royal Binary et je veux en savoir plus',
+    de: 'Hallo, ich habe Royal Binary gesehen und möchte mehr erfahren',
+    it: 'Ciao, ho visto Royal Binary e voglio saperne di più',
+    ar: 'مرحبا، رأيت Royal Binary وأريد معرفة المزيد',
+    zh: '你好，我看到了Royal Binary，想了解更多',
+    ja: 'こんにちは、Royal Binaryについて知りたいです',
+    ko: '안녕하세요, Royal Binary에 대해 더 알고 싶습니다',
+    ru: 'Здравствуйте, я видел Royal Binary и хочу узнать больше',
+    tr: 'Merhaba, Royal Binary hakkında bilgi almak istiyorum'
+  };
+  function getWaUrl() {
+    var lang = localStorage.getItem('rb_lang') || 'pt';
+    var msg = waMessages[lang] || waMessages.pt;
+    return 'https://wa.me/5511936209511?text=' + encodeURIComponent(msg);
+  }
   var pendingGroupUrl = null;
 
   function isUnlocked() { return sessionStorage.getItem('wa_unlocked') === '1'; }
@@ -2289,7 +2373,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 
   waFloat.addEventListener('click', function() {
-    if (isUnlocked()) { window.open(waUrl, '_blank'); return; }
+    if (isUnlocked()) { window.open(getWaUrl(), '_blank'); return; }
     pendingGroupUrl = null;
     showGate();
   });
@@ -4876,7 +4960,12 @@ document.addEventListener('DOMContentLoaded', function(){
     updateVideoSubtitles(lang);
   }
 
-  function updateVideoSubtitles(lang) {}
+  function updateVideoSubtitles(lang) {
+    var dl = document.getElementById('dl-vertical');
+    if (!dl) return;
+    dl.href = 'videos/motion-vertical-' + lang + '.mp4';
+    dl.setAttribute('download', 'royal-binary-' + lang + '.mp4');
+  }
 
   var motionVideo = document.getElementById('motion-video');
   var motionSub = document.getElementById('motion-subtitle');
